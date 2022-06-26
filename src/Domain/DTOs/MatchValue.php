@@ -9,6 +9,7 @@ namespace Juampi92\Phecks\Domain\DTOs;
 class MatchValue
 {
     public FileMatch $file;
+
     public mixed $value;
 
     /**
@@ -23,7 +24,6 @@ class MatchValue
     }
 
     /**
-     * @param FileMatch $file
      * @return static<FileMatch>
      */
     public static function fromFile(FileMatch $file): self

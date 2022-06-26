@@ -2,12 +2,10 @@
 
 namespace Juampi92\Phecks\Domain\Sources;
 
-use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Juampi92\Phecks\Domain\DTOs\FileMatch;
 use Juampi92\Phecks\Domain\DTOs\MatchValue;
 use Juampi92\Phecks\Domain\MatchCollection;
-use Juampi92\Phecks\Domain\MatchString;
 use Symfony\Component\Process\Process;
 
 class GrepSource

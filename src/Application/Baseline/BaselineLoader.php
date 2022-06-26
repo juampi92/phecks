@@ -9,6 +9,7 @@ use const JSON_PRETTY_PRINT;
 class BaselineLoader
 {
     private Repository $config;
+
     private Filesystem $filesystem;
 
     public function __construct(

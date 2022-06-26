@@ -3,11 +3,8 @@
 namespace Juampi92\Phecks\Domain\Checks;
 
 use Juampi92\Phecks\Domain\Contracts\Check;
-use Juampi92\Phecks\Domain\DTOs\FileMatch;
-use Juampi92\Phecks\Domain\DTOs\MatchValue;
 use Juampi92\Phecks\Domain\Extractors\NamespaceExtractor;
 use Juampi92\Phecks\Domain\Sources\ClassSource;
-use Juampi92\Phecks\Domain\Violations\FileViolation;
 use Juampi92\Phecks\Domain\Violations\Violation;
 use Juampi92\Phecks\Domain\Violations\ViolationsCollection;
 

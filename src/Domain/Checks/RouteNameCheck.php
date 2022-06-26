@@ -4,8 +4,6 @@ namespace Juampi92\Phecks\Domain\Checks;
 
 use Illuminate\Support\Str;
 use Juampi92\Phecks\Domain\Contracts\Check;
-use Juampi92\Phecks\Domain\DTOs\FileMatch;
-use Juampi92\Phecks\Domain\DTOs\MatchValue;
 use Juampi92\Phecks\Domain\Sources\RouteCommandSource;
 use Juampi92\Phecks\Domain\Violations\Violation;
 use Juampi92\Phecks\Domain\Violations\ViolationsCollection;
@@ -15,6 +13,7 @@ class RouteNameCheck implements Check
     private const ACTIONS = ['index', 'show', 'create', 'edit', 'store', 'update', 'destroy', 'redirect'];
 
     private const SINGULAR_SECTIONS = ['api', 'web', 'callback', 'google', 'apple', 'passport', 'adyen'];
+
     private RouteCommandSource $source;
 
     public function __construct(

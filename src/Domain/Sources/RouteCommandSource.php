@@ -3,7 +3,6 @@
 namespace Juampi92\Phecks\Domain\Sources;
 
 use Illuminate\Contracts\Console\Kernel as Artisan;
-use Illuminate\Support\Stringable;
 use Juampi92\Phecks\Domain\DTOs\FileMatch;
 use Juampi92\Phecks\Domain\MatchCollection;
 use Juampi92\Phecks\Domain\MatchString;
@@ -45,5 +44,4 @@ class RouteCommandSource
                 'Route: ' . $json['uri'] . ' (name: ' . $json['name'] . ')',
             ));
     }
-
 }

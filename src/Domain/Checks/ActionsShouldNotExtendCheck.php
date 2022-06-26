@@ -3,7 +3,6 @@
 namespace Juampi92\Phecks\Domain\Checks;
 
 use Juampi92\Phecks\Domain\Contracts\Check;
-use Juampi92\Phecks\Domain\DTOs\MatchValue;
 use Juampi92\Phecks\Domain\Sources\GrepSource;
 use Juampi92\Phecks\Domain\Violations\Violation;
 use Juampi92\Phecks\Domain\Violations\ViolationsCollection;

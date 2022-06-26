@@ -7,8 +7,6 @@ use Juampi92\Phecks\Application\Baseline\BaselineFilter;
 use Juampi92\Phecks\Application\Baseline\BaselineGenerator;
 use Juampi92\Phecks\Application\Formatters\ConsoleFormatter;
 use Juampi92\Phecks\Domain\CheckRunner;
-use Juampi92\Phecks\Domain\Violations\Violation;
-use Juampi92\Phecks\Domain\Violations\ViolationsCollection;
 
 class PhecksRunCommand extends Command
 {
