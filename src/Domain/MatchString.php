@@ -16,9 +16,9 @@ class MatchString extends Stringable
     {
         return new MatchCollection(
             collect(
-                json_decode($this->value, associative: true),
+                json_decode($this->value, true),
             )
-                ->map(fn (array $json, string $key) => new MatchValue(file: $callable($json, $key), value: $json))
+                ->map(fn (array $json, string $key) => new MatchValue($callable($json, $key), $json))
                 ->all(),
         );
     }
@@ -32,9 +32,9 @@ class MatchString extends Stringable
                     [$file, $line, $context] = explode(':', $match, 3);
 
                     return new FileMatch(
-                        file: $file,
-                        line: (int) $line,
-                        context: $context,
+                        $file,
+                        (int) $line,
+                        $context,
                     );
                 }),
         );

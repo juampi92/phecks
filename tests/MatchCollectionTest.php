@@ -49,7 +49,7 @@ class MatchCollectionTest extends TestCase
     public function test_extractors_can_remove_items(): void
     {
         $remover = new class() implements Extractor {
-            public function extract(mixed $match): Collection
+            public function extract($match): Collection
             {
                 return collect();
             }
@@ -74,7 +74,7 @@ class MatchCollectionTest extends TestCase
     public function test_extractors_can_add_items(): void
     {
         $duplicator = new class() implements Extractor {
-            public function extract(mixed $match): Collection
+            public function extract($match): Collection
             {
                 return collect([$match, $match]);
             }

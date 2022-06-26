@@ -15,7 +15,7 @@ class ImportsExtractor implements Extractor
      * @param FileMatch $match
      * @return Collection<class-string>
      */
-    public function extract(mixed $match): Collection
+    public function extract($match): Collection
     {
         return $this->getImportsFromFile($match);
     }

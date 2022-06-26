@@ -7,9 +7,12 @@ use Juampi92\Phecks\Domain\Violations\ViolationsCollection;
 
 class BaselineFilter
 {
+    private BaselineLoader $loader;
+
     public function __construct(
-        private BaselineLoader $loader
+        BaselineLoader $loader
     ) {
+        $this->loader = $loader;
     }
 
     public function filter(ViolationsCollection $violations): ViolationsCollection

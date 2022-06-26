@@ -13,9 +13,9 @@ class BaselineCollectionTest extends TestCase
     public function test_should_check_violation(): void
     {
         $violations = new ViolationsCollection([
-            (new Violation(identifier: 'a'))->setFile(new FileMatch('./app/FileOne.php')),
-            (new Violation(identifier: 'b'))->setFile(new FileMatch('./app/FileOne.php')),
-            (new Violation(identifier: 'a'))->setFile(new FileMatch('./app/FileTwo.php')),
+            (new Violation('a'))->setFile(new FileMatch('./app/FileOne.php')),
+            (new Violation('b'))->setFile(new FileMatch('./app/FileOne.php')),
+            (new Violation('a'))->setFile(new FileMatch('./app/FileTwo.php')),
         ]);
 
         $baseline = BaselineCollection::fromViolations($violations);
@@ -28,15 +28,15 @@ class BaselineCollectionTest extends TestCase
     public function test_should_not_check_violation_twice(): void
     {
         $violations = new ViolationsCollection([
-            (new Violation(identifier: 'a'))->setFile(new FileMatch('./app/FileOne.php')),
-            (new Violation(identifier: 'a'))->setFile(new FileMatch('./app/FileOne.php')),
-            (new Violation(identifier: 'b'))->setFile(new FileMatch('./app/FileOne.php')),
-            (new Violation(identifier: 'a'))->setFile(new FileMatch('./app/FileTwo.php')),
+            (new Violation('a'))->setFile(new FileMatch('./app/FileOne.php')),
+            (new Violation('a'))->setFile(new FileMatch('./app/FileOne.php')),
+            (new Violation('b'))->setFile(new FileMatch('./app/FileOne.php')),
+            (new Violation('a'))->setFile(new FileMatch('./app/FileTwo.php')),
         ]);
 
         $baseline = BaselineCollection::fromViolations($violations);
 
-        $violations->push((new Violation(identifier: 'a'))->setFile(new FileMatch('./app/FileTwo.php')));
+        $violations->push((new Violation('a'))->setFile(new FileMatch('./app/FileTwo.php')));
 
         $result = $violations->reject(fn (Violation $violation) => $baseline->checkViolation($violation));
 

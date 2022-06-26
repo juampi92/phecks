@@ -12,9 +12,12 @@ use Juampi92\Phecks\Domain\Violations\ViolationsCollection;
 
 class RoutePathCheck implements Check
 {
+    private RouteCommandSource $source;
+
     public function __construct(
-        private RouteCommandSource $source
+        RouteCommandSource $source
     ) {
+        $this->source = $source;
     }
 
     public function run(): ViolationsCollection

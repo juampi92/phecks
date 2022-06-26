@@ -13,7 +13,7 @@ class ImportsExtractorTest extends TestCase
     public function test_it_should_work(): void
     {
         $path = './tests/Extractors/stubs/ClassWithImports.php';
-        $file = new FileMatch(file: $path);
+        $file = new FileMatch($path);
 
         /** @var ImportsExtractor $extractor */
         $extractor = resolve(ImportsExtractor::class);

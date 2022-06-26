@@ -9,9 +9,12 @@ use Juampi92\Phecks\Domain\Violations\ViolationsCollection;
 
 class CheckRunner
 {
+    private Repository $config;
+
     public function __construct(
-        private Repository $config,
+        Repository $config,
     ) {
+        $this->config = $config;
     }
 
     public function run(): ViolationsCollection

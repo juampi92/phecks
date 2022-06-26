@@ -6,5 +6,8 @@ use Illuminate\Support\Collection;
 
 interface Extractor
 {
-    public function extract(mixed $match): Collection;
+    /**
+     * @param mixed $match
+     */
+    public function extract($match): Collection;
 }

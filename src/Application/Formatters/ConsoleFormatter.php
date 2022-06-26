@@ -10,10 +10,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ConsoleFormatter implements Formatter
 {
+    private OutputInterface $output;
+
     public function __construct(
         InputInterface $input,
-        private OutputInterface $output
+        OutputInterface $output
     ) {
+        $this->output = $output;
     }
 
     public function format(ViolationsCollection $violations): void

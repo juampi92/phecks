@@ -10,9 +10,12 @@ use Juampi92\Phecks\Domain\Violations\ViolationsCollection;
 
 class ActionsShouldNotExtendCheck implements Check
 {
+    private GrepSource $source;
+
     public function __construct(
-        private GrepSource $source
+        GrepSource $source
     ) {
+        $this->source = $source;
     }
 
     public function run(): ViolationsCollection

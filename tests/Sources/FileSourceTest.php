@@ -5,7 +5,6 @@ namespace Juampi92\Phecks\Tests\Sources;
 use Juampi92\Phecks\Domain\DTOs\MatchValue;
 use Juampi92\Phecks\Domain\Sources\FileSource;
 use Juampi92\Phecks\Tests\TestCase;
-use Symfony\Component\Finder\SplFileInfo;
 
 class FileSourceTest extends TestCase
 {

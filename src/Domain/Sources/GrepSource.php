@@ -29,7 +29,10 @@ class GrepSource
         return $this;
     }
 
-    public function files(array|string $files): self
+    /**
+     * @param array|string $files
+     */
+    public function files($files): self
     {
         $files = is_array($files) ? $files : func_get_args();
         $this->files = array_merge($this->files, $files);
@@ -54,9 +57,9 @@ class GrepSource
                     [$file, $line, $context] = explode(':', $match, 3);
 
                     return new FileMatch(
-                        file: $file,
-                        line: (int) $line,
-                        context: $context,
+                        $file,
+                        (int) $line,
+                        $context,
                     );
                 }),
         );

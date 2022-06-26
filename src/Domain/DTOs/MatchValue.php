@@ -8,31 +8,36 @@ namespace Juampi92\Phecks\Domain\DTOs;
  */
 class MatchValue
 {
+    public FileMatch $file;
+    public mixed $value;
+
     /**
      * @param TValue $value
      */
     public function __construct(
-        public FileMatch $file,
-        public mixed $value,
+        FileMatch $file,
+        mixed $value,
     ) {
+        $this->file = $file;
+        $this->value = $value;
     }
 
     /**
      * @param FileMatch $file
-     * @return static<FileMatch, FileMatch>
+     * @return static<FileMatch>
      */
     public static function fromFile(FileMatch $file): self
     {
-        return new self(file: $file, value: $file);
+        return new self($file, $file);
     }
 
     /**
      * @template TNewValue
      * @param TNewValue $value
-     * @return static<FileMatch, TNewValue>
+     * @return static<TNewValue>
      */
     public function setValue(mixed $value): self
     {
-        return new self(file: $this->file, value: $value);
+        return new self($this->file, $value);
     }
 }

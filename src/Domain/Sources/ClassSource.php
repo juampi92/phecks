@@ -2,18 +2,20 @@
 
 namespace Juampi92\Phecks\Domain\Sources;
 
-use Illuminate\Support\Collection;
 use Juampi92\Phecks\Domain\Extractors\ClassExtractor;
 use Juampi92\Phecks\Domain\MatchCollection;
 
 class ClassSource
 {
+    private FileSource $fileSource;
+
     protected ?string $dir = null;
 
     protected bool $recursive = false;
 
-    public function __construct(private FileSource $fileSource)
+    public function __construct(FileSource $fileSource)
     {
+        $this->fileSource = $fileSource;
     }
 
     public function directory(string $dir): self

@@ -13,9 +13,12 @@ use Juampi92\Phecks\Domain\Violations\ViolationsCollection;
 
 class ModelsNamespaceCheck implements Check
 {
+    private ClassSource $classSource;
+
     public function __construct(
-        private ClassSource $classSource
+        ClassSource $classSource
     ) {
+        $this->classSource = $classSource;
     }
 
     public function run(): ViolationsCollection

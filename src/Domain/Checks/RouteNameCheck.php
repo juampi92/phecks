@@ -15,10 +15,12 @@ class RouteNameCheck implements Check
     private const ACTIONS = ['index', 'show', 'create', 'edit', 'store', 'update', 'destroy', 'redirect'];
 
     private const SINGULAR_SECTIONS = ['api', 'web', 'callback', 'google', 'apple', 'passport', 'adyen'];
+    private RouteCommandSource $source;
 
     public function __construct(
-        private RouteCommandSource $source
+        RouteCommandSource $source
     ) {
+        $this->source = $source;
     }
 
     public function run(): ViolationsCollection

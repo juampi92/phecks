@@ -11,13 +11,16 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class FileSource
 {
+    protected Filesystem $filesystem;
+
     protected ?string $dir = null;
 
     protected bool $recursive = false;
 
     public function __construct(
-        protected Filesystem $filesystem
+        Filesystem $filesystem
     ) {
+        $this->filesystem = $filesystem;
     }
 
     public function directory(string $dir): self

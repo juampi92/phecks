@@ -8,10 +8,15 @@ use const JSON_PRETTY_PRINT;
 
 class BaselineLoader
 {
+    private Repository $config;
+    private Filesystem $filesystem;
+
     public function __construct(
-        private Repository $config,
-        private Filesystem $filesystem,
+        Repository $config,
+        Filesystem $filesystem
     ) {
+        $this->filesystem = $filesystem;
+        $this->config = $config;
         // Hack needed to access files from the absolute path.
         $this->filesystem->getDriver()->getAdapter()->setPathPrefix('\\');
     }

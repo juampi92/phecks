@@ -6,12 +6,18 @@ use Juampi92\Phecks\Domain\DTOs\FileMatch;
 
 class Violation
 {
+    private string $identifier;
+
+    private ?string $explanation;
+
     private ?FileMatch $file = null;
 
     public function __construct(
-        private string $identifier,
-        private ?string $explanation = null,
+        string $identifier,
+        ?string $explanation = null,
     ) {
+        $this->identifier = $identifier;
+        $this->explanation = $explanation;
     }
 
     public function setFile(FileMatch $file): self

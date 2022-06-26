@@ -6,9 +6,12 @@ use Juampi92\Phecks\Domain\Violations\ViolationsCollection;
 
 class BaselineGenerator
 {
+    private BaselineLoader $loader;
+
     public function __construct(
-        private BaselineLoader $loader
+        BaselineLoader $loader
     ) {
+        $this->loader = $loader;
     }
 
     public function generate(ViolationsCollection $violations): void

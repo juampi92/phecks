@@ -10,18 +10,21 @@ use Juampi92\Phecks\Domain\MatchString;
 
 class RouteCommandSource
 {
+    private Artisan $artisan;
+
     /** @var array<string> */
     protected array $columns = [];
 
     public function __construct(
-        private Artisan $artisan
+        Artisan $artisan
     ) {
+        $this->artisan = $artisan;
     }
 
     /**
      * @param array<string>|string $column
      */
-    public function columns(array|string $column): self
+    public function columns($column): self
     {
         $columns = is_array($column) ? $column : func_get_args();
         $this->columns = $columns;
@@ -39,7 +42,7 @@ class RouteCommandSource
 
         return (new MatchString($this->artisan->output()))
             ->jsonToMatchCollection(fn (array $json) => new FileMatch(
-                file: 'Route: ' . $json['uri'] . ' (name: ' . $json['name'] . ')',
+                'Route: ' . $json['uri'] . ' (name: ' . $json['name'] . ')',
             ));
     }
 
