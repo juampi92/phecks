@@ -44,6 +44,6 @@ class PhecksServiceProvider extends ServiceProvider
     {
         $this->publishes([
             __DIR__ . '/../publishable/config/phecks.php' => config_path('phecks.php'),
-        ]);
+        ], 'phecks:config');
     }
 }
