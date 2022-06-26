@@ -1,0 +1,44 @@
+{
+  "name": "juampi92/phecks",
+  "description": "A package to run custom PHP checks",
+  "authors": [
+    {
+      "name": "juampi92",
+      "email": "juampi92@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "keywords": ["laravel", "api"],
+  "require": {
+    "php" : "^7.4|^8.0|^8.1",
+    "illuminate/support": "^7.0|^8.0|^9.0",
+    "illuminate/http": "^7.0|^8.0|^9.0"
+  },
+  "require-dev": {
+    "orchestra/testbench": "^5.0|^6.0|^7.0",
+    "phpunit/phpunit": "^9.4",
+    "friendsofphp/php-cs-fixer": "^3.8"
+  },
+  "autoload": {
+    "psr-4": {
+      "Juampi92\\Phecks\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Juampi92\\Phecks\\Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit --colors=always",
+    "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+    "php-cs-fix": "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Juampi92\\APIResources\\PhecksServiceProvider"
+      ]
+    }
+  }
+}
