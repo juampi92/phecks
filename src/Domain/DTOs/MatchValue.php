@@ -10,14 +10,15 @@ class MatchValue
 {
     public FileMatch $file;
 
-    public mixed $value;
+    /** @var mixed */
+    public $value;
 
     /**
      * @param TValue $value
      */
     public function __construct(
         FileMatch $file,
-        mixed $value,
+        $value
     ) {
         $this->file = $file;
         $this->value = $value;
@@ -36,7 +37,7 @@ class MatchValue
      * @param TNewValue $value
      * @return static<TNewValue>
      */
-    public function setValue(mixed $value): self
+    public function setValue($value): self
     {
         return new self($this->file, $value);
     }

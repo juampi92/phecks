@@ -20,7 +20,7 @@ class MatchCollection
     /**
      * @param array<MatchValue<TValue>>|Collection<MatchValue<TValue>>|null $matches
      */
-    public function __construct(array|Collection|null $matches)
+    public function __construct($matches)
     {
         $this->matches = collect($matches);
     }
@@ -29,7 +29,7 @@ class MatchCollection
      * @param array<FileMatch>|Collection<FileMatch> $files
      * @return MatchCollection<MatchValue<FileMatch>>
      */
-    public static function fromFiles(array|Collection $files): self
+    public static function fromFiles($files): self
     {
         return new self(
             collect($files)
@@ -67,7 +67,7 @@ class MatchCollection
     /**
      * @param callable(TValue): bool|null $callable
      */
-    public function filter(callable|null $callable = null): self
+    public function filter($callable = null): self
     {
         $callable = $callable ?? (fn ($item) => (bool) $item);
 
@@ -79,7 +79,7 @@ class MatchCollection
     /**
      * @param callable(TValue): bool|null $callable
      */
-    public function reject(callable|null $callable = null): self
+    public function reject($callable = null): self
     {
         $callable = $callable ?? (fn ($item) => (bool) $item);
 
