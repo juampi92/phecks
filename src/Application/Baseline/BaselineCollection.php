@@ -58,8 +58,8 @@ class BaselineCollection
                         $extraOccurrences = abs($counter);
 
                         return (new Violation(
-                            identifier: $identifier,
-                            explanation: "Ignored check ocurred {$extraOccurrences} more times than expected.",
+                            $identifier,
+                            "Ignored check ocurred {$extraOccurrences} more times than expected.",
                         ))->setFile(new FileMatch($target));
                     });
             })

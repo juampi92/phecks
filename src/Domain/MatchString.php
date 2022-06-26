@@ -34,6 +34,7 @@ class MatchString extends Stringable
                     return new FileMatch(
                         $file,
                         (int) $line,
+                        null,
                         $context,
                     );
                 }),

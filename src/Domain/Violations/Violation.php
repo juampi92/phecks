@@ -14,7 +14,7 @@ class Violation
 
     public function __construct(
         string $identifier,
-        ?string $explanation = null,
+        ?string $explanation = null
     ) {
         $this->identifier = $identifier;
         $this->explanation = $explanation;

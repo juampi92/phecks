@@ -57,6 +57,7 @@ class GrepSource
                     return new FileMatch(
                         $file,
                         (int) $line,
+                        null,
                         $context,
                     );
                 }),
