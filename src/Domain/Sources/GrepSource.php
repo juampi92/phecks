@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 use Juampi92\Phecks\Domain\Contracts\Source;
 use Juampi92\Phecks\Domain\DTOs\FileMatch;
 use Juampi92\Phecks\Domain\MatchCollection;
+use RuntimeException;
 use Symfony\Component\Process\Process;
 
 class GrepSource implements Source
@@ -38,6 +39,20 @@ class GrepSource implements Source
         return $this;
     }
 
+    public function setFlags(string $flags): self
+    {
+        $this->flags = $flags;
+
+        return $this;
+    }
+
+    public function addFlags(string $flags): self
+    {
+        $this->flags .= $flags;
+
+        return $this;
+    }
+
     /**
      * @return MatchCollection<FileMatch>
      */
@@ -47,6 +62,11 @@ class GrepSource implements Source
 
         $process = Process::fromShellCommandline("grep -{$this->flags} \"{$this->pattern}\" {$files}");
         $process->run();
+
+        if ($process->getExitCode() > 1) {
+            // 0 = Success ; 1 = No results ; > 1 => Error
+            throw new RuntimeException(sprintf('Grep failed with error: %s', $process->getErrorOutput()));
+        }
 
         return MatchCollection::fromFiles(
             Str::of($process->getOutput())->explode("\n")
