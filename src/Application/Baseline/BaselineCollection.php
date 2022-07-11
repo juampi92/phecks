@@ -4,6 +4,7 @@ namespace Juampi92\Phecks\Application\Baseline;
 
 use Illuminate\Support\Collection;
 use Juampi92\Phecks\Domain\DTOs\FileMatch;
+use Juampi92\Phecks\Domain\Violations\Explanation;
 use Juampi92\Phecks\Domain\Violations\Violation;
 use Juampi92\Phecks\Domain\Violations\ViolationsCollection;
 
@@ -57,10 +58,11 @@ class BaselineCollection
                     ->map(function (int $counter, string $target) use ($identifier): Violation {
                         $extraOccurrences = abs($counter);
 
-                        return (new Violation(
+                        return new Violation(
                             $identifier,
-                            "Ignored check ocurred {$extraOccurrences} more times than expected.",
-                        ))->setFile(new FileMatch($target));
+                            new FileMatch($target),
+                            new Explanation("Ignored check ocurred {$extraOccurrences} more times than expected."),
+                        );
                     });
             })
             ->values();

@@ -6,25 +6,22 @@ use Juampi92\Phecks\Domain\DTOs\FileMatch;
 
 class Violation
 {
-    private string $identifier;
+    public string $identifier;
 
-    private ?string $explanation;
+    public FileMatch $file;
 
-    private ?FileMatch $file = null;
+    protected Explanation $explanation;
 
-    public function __construct(
-        string $identifier,
-        ?string $explanation = null
-    ) {
+    public function __construct(string $identifier, FileMatch $file, Explanation $explanation)
+    {
         $this->identifier = $identifier;
+        $this->file = $file;
         $this->explanation = $explanation;
     }
 
-    public function setFile(FileMatch $file): self
+    public function getIdentifier(): string
     {
-        $this->file = $file;
-
-        return $this;
+        return $this->identifier;
     }
 
     public function getTarget(): string
@@ -42,13 +39,8 @@ class Violation
         );
     }
 
-    public function getIdentifier(): string
-    {
-        return $this->identifier;
-    }
-
     public function getExplanation(): ?string
     {
-        return $this->explanation;
+        return $this->explanation->getText();
     }
 }

@@ -5,7 +5,6 @@ namespace Juampi92\Phecks\Domain\Sources;
 use Illuminate\Filesystem\Filesystem;
 use Juampi92\Phecks\Domain\Contracts\Source;
 use Juampi92\Phecks\Domain\DTOs\FileMatch;
-use Juampi92\Phecks\Domain\DTOs\MatchValue;
 use Juampi92\Phecks\Domain\MatchCollection;
 use RuntimeException;
 use Symfony\Component\Finder\SplFileInfo;

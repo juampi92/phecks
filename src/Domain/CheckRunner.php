@@ -12,7 +12,7 @@ class CheckRunner
     private Repository $config;
 
     public function __construct(
-        Repository $config,
+        Repository $config
     ) {
         $this->config = $config;
     }
@@ -21,10 +21,9 @@ class CheckRunner
     {
         return new ViolationsCollection(
             $this->getChecks()
-                ->flatMap(function (Check $check) {
+                ->flatMap(function (Check $check): Collection {
                     return $check->run();
-                })
-                ->filter(),
+                }),
         );
     }
 

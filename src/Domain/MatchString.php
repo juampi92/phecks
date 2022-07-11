@@ -10,7 +10,7 @@ class MatchString extends Stringable
 {
     /**
      * @param callable(array, string): FileMatch $callable
-     * @return MatchCollection<MatchValue<FileMatch, array>>
+     * @return MatchCollection<FileMatch>
      */
     public function jsonToMatchCollection(callable $callable): MatchCollection
     {
@@ -23,7 +23,12 @@ class MatchString extends Stringable
         );
     }
 
-    public function explode($delimiter = "\n", $limit = PHP_INT_MAX): MatchCollection
+    /**
+     * @param string $delimiter
+     * @param int $limit
+     * @return MatchCollection<FileMatch>
+     */
+    public function explode($delimiter = "\n", $limit = PHP_INT_MAX)
     {
         return MatchCollection::fromFiles(
             parent::explode($delimiter, $limit)

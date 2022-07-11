@@ -27,7 +27,7 @@ class MatchCollection
 
     /**
      * @param array<FileMatch>|Collection<FileMatch> $files
-     * @return MatchCollection<MatchValue<FileMatch>>
+     * @return MatchCollection<FileMatch>
      */
     public static function fromFiles($files): self
     {
@@ -53,37 +53,37 @@ class MatchCollection
     }
 
     /**
-     * @param callable(mixed): Violation $callable
+     * @param callable(TValue, FileMatch): Violation $callable
      */
     public function mapViolations(callable $callable): ViolationsCollection
     {
         return new ViolationsCollection(
             $this->matches
-                ->map(fn (MatchValue $match) => $callable($match->value)->setFile($match->file))
+                ->map(fn (MatchValue $match) => $callable($match->value, $match->file))
                 ->all(),
         );
     }
 
     /**
-     * @param callable(TValue): bool|null $callable
+     * @param callable(TValue, FileMatch): bool|null $callable
      */
     public function filter($callable = null): self
     {
         $callable = $callable ?? (fn ($item) => (bool) $item);
 
-        $this->matches = $this->matches->filter(fn (MatchValue $match) => $callable($match->value));
+        $this->matches = $this->matches->filter(fn (MatchValue $match) => $callable($match->value, $match->file));
 
         return $this;
     }
 
     /**
-     * @param callable(TValue): bool|null $callable
+     * @param callable(TValue, FileMatch): bool|null $callable
      */
     public function reject($callable = null): self
     {
         $callable = $callable ?? (fn ($item) => (bool) $item);
 
-        $this->matches = $this->matches->reject(fn (MatchValue $match) => $callable($match->value));
+        $this->matches = $this->matches->reject(fn (MatchValue $match) => $callable($match->value, $match->file));
 
         return $this;
     }

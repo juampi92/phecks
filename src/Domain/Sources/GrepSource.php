@@ -5,7 +5,6 @@ namespace Juampi92\Phecks\Domain\Sources;
 use Illuminate\Support\Str;
 use Juampi92\Phecks\Domain\Contracts\Source;
 use Juampi92\Phecks\Domain\DTOs\FileMatch;
-use Juampi92\Phecks\Domain\DTOs\MatchValue;
 use Juampi92\Phecks\Domain\MatchCollection;
 use Symfony\Component\Process\Process;
 
