@@ -1,6 +1,6 @@
 <?php
 
-use Juampi92\Phecks\Domain\Checks;
+use Phecks\Checks;
 
 return [
     /*
@@ -12,10 +12,7 @@ return [
      */
 
     'checks' => [
-        Checks\RouteNameCheck::class,
-        Checks\RoutePathCheck::class,
-        Checks\ModelsNamespaceCheck::class,
-        Checks\ActionsShouldNotExtendCheck::class,
+        // Checks\Check::class,
     ],
 
     /*
