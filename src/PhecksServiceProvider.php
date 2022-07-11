@@ -3,6 +3,7 @@
 namespace Juampi92\Phecks;
 
 use Illuminate\Support\ServiceProvider;
+use Juampi92\Phecks\Application\Console\PheckMakeCommand;
 use Juampi92\Phecks\Application\Console\PhecksRunCommand;
 
 class PhecksServiceProvider extends ServiceProvider
@@ -33,6 +34,7 @@ class PhecksServiceProvider extends ServiceProvider
 
             $this->commands([
                 PhecksRunCommand::class,
+                PheckMakeCommand::class,
             ]);
         }
     }

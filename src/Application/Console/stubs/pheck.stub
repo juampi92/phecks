@@ -1,0 +1,36 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Support\Collection;
+use Juampi92\Phecks\Domain\Contracts\Check;
+use Juampi92\Phecks\Domain\DTOs\FileMatch;
+use Juampi92\Phecks\Domain\Violations\Violation;
+use Juampi92\Phecks\Domain\Violations\ViolationBuilder;
+
+class {{ class }} implements Check
+{
+    private $source;
+
+    public function __construct(
+        $source
+    ) {
+        $this->source = $source;
+    }
+
+    /**
+     * @return Collection<Violation>
+     */
+    public function run(): Collection
+    {
+        return $this->source
+            ->run()
+            ->mapViolations(function ($match, FileMatch $file) {
+                return ViolationBuilder::make()
+                    ->identifier('{{ class }}')
+                    ->file($file)
+                    ->explanation('Explain the error here.')
+                    ->build();
+            });
+    }
+}
