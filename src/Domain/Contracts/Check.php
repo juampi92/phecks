@@ -2,9 +2,13 @@
 
 namespace Juampi92\Phecks\Domain\Contracts;
 
-use Juampi92\Phecks\Domain\Violations\ViolationsCollection;
+use Illuminate\Support\Collection;
+use Juampi92\Phecks\Domain\Violations\Violation;
 
 interface Check
 {
-    public function run(): ViolationsCollection;
+    /**
+     * @return Collection<Violation>
+     */
+    public function run(): Collection;
 }

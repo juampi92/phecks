@@ -3,12 +3,13 @@
 namespace Juampi92\Phecks\Domain\Sources;
 
 use Illuminate\Support\Str;
+use Juampi92\Phecks\Domain\Contracts\Source;
 use Juampi92\Phecks\Domain\DTOs\FileMatch;
 use Juampi92\Phecks\Domain\DTOs\MatchValue;
 use Juampi92\Phecks\Domain\MatchCollection;
 use Symfony\Component\Process\Process;
 
-class GrepSource
+class GrepSource implements Source
 {
     protected ?string $pattern = null;
 
@@ -39,7 +40,7 @@ class GrepSource
     }
 
     /**
-     * @return MatchCollection<MatchValue<FileMatch>>
+     * @return MatchCollection<FileMatch>
      */
     public function run(): MatchCollection
     {

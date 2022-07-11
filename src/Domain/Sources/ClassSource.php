@@ -2,10 +2,11 @@
 
 namespace Juampi92\Phecks\Domain\Sources;
 
+use Juampi92\Phecks\Domain\Contracts\Source;
 use Juampi92\Phecks\Domain\Extractors\ClassExtractor;
 use Juampi92\Phecks\Domain\MatchCollection;
 
-class ClassSource
+class ClassSource implements Source
 {
     private FileSource $fileSource;
 

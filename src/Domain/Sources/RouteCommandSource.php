@@ -3,11 +3,13 @@
 namespace Juampi92\Phecks\Domain\Sources;
 
 use Illuminate\Contracts\Console\Kernel as Artisan;
+use Juampi92\Phecks\Domain\Contracts\Source;
 use Juampi92\Phecks\Domain\DTOs\FileMatch;
+use Juampi92\Phecks\Domain\DTOs\MatchValue;
 use Juampi92\Phecks\Domain\MatchCollection;
 use Juampi92\Phecks\Domain\MatchString;
 
-class RouteCommandSource
+class RouteCommandSource implements Source
 {
     private Artisan $artisan;
 
