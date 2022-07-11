@@ -72,8 +72,8 @@ class ViolationBuilder
             throw new RuntimeException('The file is needed when building a violation. Use ->file(FileMatch $file) to set it.');
         }
 
-        if (!$this->check && $this->identifier) {
-            throw new RuntimeException('The violation\'s identifier is required. Use ->idenfifier(\'string\') or ->check(Check $check) to use the check\'s classname');
+        if (!$this->check && !$this->identifier) {
+            throw new RuntimeException('The violation\'s identifier is required. Use ->identifier(\'string\') or ->check(Check $check) to use the check\'s classname');
         }
 
         return new Violation(
