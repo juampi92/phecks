@@ -24,7 +24,7 @@ class ConsoleFormatter implements Formatter
         $this->output->writeln('');
 
         $violations
-            ->groupBy->getTarget()
+            ->groupBy(fn (Violation $violation): string => $violation->getTarget())
             ->each(function (ViolationsCollection $violations, string $target) {
                 $this->output->writeln('');
                 $this->output->writeln("<bg=red> ◼ {$target} </>");

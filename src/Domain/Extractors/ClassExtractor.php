@@ -35,6 +35,10 @@ class ClassExtractor implements Extractor
         $namespace = '';
         $i = 0;
 
+        if (!is_resource($fp)) {
+            return null;
+        }
+
         while (true) {
             if (feof($fp)) {
                 break;
@@ -60,7 +64,7 @@ class ClassExtractor implements Extractor
                 if ($tokens[$i][0] === T_CLASS) {
                     for ($j = $i + 1; $j < count($tokens); $j++) {
                         if ($tokens[$j] === '{') {
-                            // We break here.
+                            // We break here. @phpstan-ignore-next-line
                             return $namespace . '\\' . $tokens[$i + 2][1];
                         }
                     }

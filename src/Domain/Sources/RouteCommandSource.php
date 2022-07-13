@@ -5,6 +5,7 @@ namespace Juampi92\Phecks\Domain\Sources;
 use Illuminate\Contracts\Console\Kernel as Artisan;
 use Juampi92\Phecks\Domain\Contracts\Source;
 use Juampi92\Phecks\Domain\DTOs\FileMatch;
+use Juampi92\Phecks\Domain\DTOs\MatchValue;
 use Juampi92\Phecks\Domain\MatchCollection;
 use Juampi92\Phecks\Domain\MatchString;
 
@@ -40,9 +41,19 @@ class RouteCommandSource implements Source
         $columns = array_merge($this->columns, ['name', 'uri']);
         $this->artisan->call('route:list', ['--columns' => $columns, '--json' => true]);
 
-        return (new MatchString($this->artisan->output()))
-            ->jsonToMatchCollection(fn (array $json) => new FileMatch(
-                'Route: ' . $json['uri'] . ' (name: ' . $json['name'] . ')',
-            ));
+        return new MatchCollection(
+            (new MatchString($this->artisan->output()))
+                ->collect()
+                ->map(
+                    /** @param array{name: string, uri: string} $json */
+                    function (array $json): MatchValue {
+                        return new MatchValue(
+                            new FileMatch('Route: ' . $json['uri'] . ' (name: ' . $json['name'] . ')'),
+                            $json,
+                        );
+                    },
+                )
+                ->all(),
+        );
     }
 }

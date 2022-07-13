@@ -41,7 +41,7 @@ class BaselineLoader
 
         $this->filesystem->put(
             $path,
-            json_encode($baseline->toArray(), JSON_PRETTY_PRINT),
+            json_encode($baseline->toArray(), JSON_PRETTY_PRINT) ?: '{}',
         );
     }
 

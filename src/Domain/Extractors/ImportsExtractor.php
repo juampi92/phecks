@@ -27,6 +27,10 @@ class ImportsExtractor implements Extractor
         $buffer = '';
         $i = 0;
 
+        if (!is_resource($fp)) {
+            return collect();
+        }
+
         $imports = collect();
 
         while (true) {

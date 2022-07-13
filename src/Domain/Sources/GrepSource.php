@@ -13,7 +13,7 @@ class GrepSource implements Source
 {
     protected ?string $pattern = null;
 
-    protected ?array $files = [];
+    protected array $files = [];
 
     protected string $flags = 'RHn';
 

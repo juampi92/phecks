@@ -33,8 +33,9 @@ class CheckRunner
     private function getChecks(): Collection
     {
         return collect($this->config->get('phecks.checks'))
-            ->map(/** @param class-string<Check> $class */function ($class) {
-                return resolve($class);
-            });
+            ->map(
+                /** @param class-string<Check> $class */
+                fn (string $class): Check => resolve($class),
+            );
     }
 }

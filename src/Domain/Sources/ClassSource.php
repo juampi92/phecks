@@ -5,6 +5,7 @@ namespace Juampi92\Phecks\Domain\Sources;
 use Juampi92\Phecks\Domain\Contracts\Source;
 use Juampi92\Phecks\Domain\Extractors\ClassExtractor;
 use Juampi92\Phecks\Domain\MatchCollection;
+use RuntimeException;
 
 class ClassSource implements Source
 {
@@ -38,6 +39,10 @@ class ClassSource implements Source
      */
     public function run(): MatchCollection
     {
+        if (!$this->dir) {
+            throw new RuntimeException('Please specify a directory using ->directory(string)');
+        }
+
         return $this->fileSource
             ->directory($this->dir)
             ->recursive($this->recursive)

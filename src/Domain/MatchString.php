@@ -2,36 +2,34 @@
 
 namespace Juampi92\Phecks\Domain;
 
-use Illuminate\Support\Stringable;
+use Illuminate\Support\Collection;
 use Juampi92\Phecks\Domain\DTOs\FileMatch;
-use Juampi92\Phecks\Domain\DTOs\MatchValue;
 
-class MatchString extends Stringable
+class MatchString
 {
-    /**
-     * @param callable(array, string): FileMatch $callable
-     * @return MatchCollection<FileMatch>
-     */
-    public function jsonToMatchCollection(callable $callable): MatchCollection
+    protected string $value;
+
+    public function __construct(string $value = '')
     {
-        return new MatchCollection(
-            collect(
-                json_decode($this->value, true),
-            )
-                ->map(fn (array $json, string $key) => new MatchValue($callable($json, $key), $json))
-                ->all(),
+        $this->value = $value;
+    }
+
+    public function collect(): Collection
+    {
+        return collect(
+            json_decode($this->value, true),
         );
     }
 
     /**
-     * @param string $delimiter
+     * @param non-empty-string $delimiter
      * @param int $limit
      * @return MatchCollection<FileMatch>
      */
     public function explode($delimiter = "\n", $limit = PHP_INT_MAX)
     {
         return MatchCollection::fromFiles(
-            parent::explode($delimiter, $limit)
+            collect(explode($delimiter, $this->value, $limit))
                 ->filter()
                 ->map(function ($match): FileMatch {
                     [$file, $line, $context] = explode(':', $match, 3);
