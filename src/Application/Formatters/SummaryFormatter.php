@@ -3,7 +3,6 @@
 namespace Juampi92\Phecks\Application\Formatters;
 
 use Juampi92\Phecks\Application\Contracts\Formatter;
-use Juampi92\Phecks\Domain\Violations\Violation;
 use Juampi92\Phecks\Domain\Violations\ViolationsCollection;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
