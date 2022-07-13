@@ -5,7 +5,6 @@ namespace Juampi92\Phecks\Application\Console;
 use Illuminate\Console\Command;
 use Juampi92\Phecks\Application\Baseline\BaselineFilter;
 use Juampi92\Phecks\Application\Baseline\BaselineGenerator;
-use Juampi92\Phecks\Application\Formatters\ConsoleFormatter;
 use Juampi92\Phecks\Application\Formatters\FormatResolver;
 use Juampi92\Phecks\Domain\CheckRunner;
 
