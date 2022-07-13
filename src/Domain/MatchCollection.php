@@ -2,6 +2,7 @@
 
 namespace Juampi92\Phecks\Domain;
 
+use Countable;
 use Illuminate\Support\Collection;
 use Juampi92\Phecks\Domain\Contracts\Extractor;
 use Juampi92\Phecks\Domain\DTOs\FileMatch;
@@ -12,7 +13,7 @@ use Juampi92\Phecks\Domain\Violations\ViolationsCollection;
 /**
  * @template TValue
  */
-class MatchCollection
+class MatchCollection implements Countable
 {
     /** @var Collection<MatchValue<TValue>> */
     private Collection $matches;
