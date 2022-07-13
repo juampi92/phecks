@@ -9,10 +9,14 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class FormatResolver
 {
+    /** @var array<non-empty-string, class-string<Formatter>> */
     public const FORMATTERS = [
+        'summary' => SummaryFormatter::class,
+        'github' => GithubActionFormatter::class,
         'console' => ConsoleFormatter::class,
     ];
 
+    /** @var class-string<Formatter> */
     public const DEFAULT_FORMATTER = ConsoleFormatter::class;
 
     /**
