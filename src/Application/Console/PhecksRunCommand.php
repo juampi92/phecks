@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use Juampi92\Phecks\Application\Baseline\BaselineFilter;
 use Juampi92\Phecks\Application\Baseline\BaselineGenerator;
 use Juampi92\Phecks\Application\Formatters\ConsoleFormatter;
+use Juampi92\Phecks\Application\Formatters\FormatResolver;
 use Juampi92\Phecks\Domain\CheckRunner;
 
 class PhecksRunCommand extends Command
@@ -17,7 +18,8 @@ class PhecksRunCommand extends Command
      */
     protected $signature = 'phecks:run
                                     {--generate-baseline : Will run and generate the baseline.}
-                                    {--ignore-baseline : Will run and show all errors.}';
+                                    {--ignore-baseline : Will run and show all errors.}
+                                    {--format=console : Pick a formatter. console|stats}';
 
     /**
      * The console command description.
@@ -46,8 +48,7 @@ class PhecksRunCommand extends Command
             return self::SUCCESS;
         }
 
-        $formatter = new ConsoleFormatter($this->input, $this->getOutput());
-
+        $formatter = FormatResolver::resolve($this->option('format'), $this->input, $this->getOutput());
         $formatter->format($violations);
 
         if ($violations->isNotEmpty()) {
