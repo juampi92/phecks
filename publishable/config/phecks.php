@@ -8,8 +8,10 @@ return [
     | Checks
     |--------------------------------------------------------------------------
     |
-    | Description.
-     */
+    | List of Checks that will run on the current repository.
+    | Feel free to group checks in sub-folders.
+    |
+    */
 
     'checks' => [
         // Checks\Check::class,
@@ -21,7 +23,8 @@ return [
     |--------------------------------------------------------------------------
     |
     | Where the baseline is located.
-     */
+    |
+    */
 
     'baseline' => '.phecks.baseline.json',
 ];
