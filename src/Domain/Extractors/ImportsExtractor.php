@@ -5,6 +5,7 @@ namespace Juampi92\Phecks\Domain\Extractors;
 use Illuminate\Support\Collection;
 use Juampi92\Phecks\Domain\Contracts\Extractor;
 use Juampi92\Phecks\Domain\DTOs\FileMatch;
+
 use const T_USE;
 
 class ImportsExtractor implements Extractor
