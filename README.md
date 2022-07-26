@@ -42,6 +42,20 @@ php artisan phecks:run
 composer test
 ```
 
+## Contribution
+
+List of tasks missing for the release:
+
+- [ ] Improve Console formatter to list tips and errors in a clearer way (more similar to PHPStan).
+- [ ] Make a progress bar for the checks.
+- [ ] Make an ArtisanSource (php artisan list).
+- [ ] Figure out how to use the filter + map together (many times, the filter method could return the explanation directly. Since the map is the one that takes the explanation)
+
+Ideas for future releases:
+
+- Be able to run only one Check.
+- Allow configuration of Checks (using the config).
+
 ## Credits
 
 - [juampi92](https://github.com/juampi92)
