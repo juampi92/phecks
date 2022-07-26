@@ -26,7 +26,7 @@ class ConfigSource implements Source
         return new MatchCollection(
             collect($this->config->all())
                 ->flatMap(function ($value, string $configName) {
-                    $file = new FileMatch(config_path($configName . '.php')); // This is not necesarily true.
+                    $file = new FileMatch("./config/{$configName}.php");
 
                     return collect(Arr::dot([$configName => $value]))
                         ->map(function ($value, string $key) use ($file): MatchValue {

@@ -5,8 +5,6 @@ namespace Juampi92\Phecks\Application\Baseline;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Filesystem\Filesystem;
 
-use const JSON_PRETTY_PRINT;
-
 class BaselineLoader
 {
     private Repository $config;
