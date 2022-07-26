@@ -33,7 +33,7 @@ class ConfigSourceTest extends TestCase
         $this->assertEquals(['key' => 'other-file.foo2', 'value' => 'bar2'], $result->getMatches()->last()->value);
 
         // Assert Files
-        $this->assertEquals(config_path('my-testing-config-key.php'), $result->getMatches()->first()->file->file);
-        $this->assertEquals(config_path('other-file.php'), $result->getMatches()->last()->file->file);
+        $this->assertEquals('./config/my-testing-config-key.php', $result->getMatches()->first()->file->file);
+        $this->assertEquals('./config/other-file.php', $result->getMatches()->last()->file->file);
     }
 }
