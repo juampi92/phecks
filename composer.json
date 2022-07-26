@@ -39,7 +39,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "Juampi92\\APIResources\\PhecksServiceProvider"
+        "Juampi92\\Phecks\\PhecksServiceProvider"
       ]
     }
   }
