@@ -17,7 +17,7 @@ class FileSourceTest extends TestCase
         $this->assertGreaterThan(1, $result->count());
 
         $paths = $result
-            ->getMatches()
+            ->getItems()
             ->map(fn (MatchValue $match) => dirname($match->file->file))
             ->unique();
 
@@ -34,7 +34,7 @@ class FileSourceTest extends TestCase
         $this->assertGreaterThan(1, $result->count());
 
         $paths = $result
-            ->getMatches()
+            ->getItems()
             ->map(fn (MatchValue $match) => dirname($match->file->file))
             ->unique();
 

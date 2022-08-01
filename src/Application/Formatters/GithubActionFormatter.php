@@ -23,7 +23,7 @@ class GithubActionFormatter implements Formatter
             $file = $this->getRelativePath($violation->file->file);
             $line = $violation->file->line ?? 1;
             $title = $violation->getIdentifier();
-            $message = $violation->getExplanation();
+            $message = $violation->getMessage();
 
             $this->output->writeln(sprintf(
                 '::error file=%s,line=%s,title=%s::%s',

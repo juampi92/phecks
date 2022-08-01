@@ -61,7 +61,7 @@ class BaselineCollection
                         return new Violation(
                             $identifier,
                             new FileMatch($target),
-                            new Explanation("Ignored check ocurred {$extraOccurrences} more times than expected."),
+                            "Ignored check ocurred {$extraOccurrences} more times than expected.",
                         );
                     });
             })

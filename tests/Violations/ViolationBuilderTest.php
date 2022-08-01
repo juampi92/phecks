@@ -2,9 +2,9 @@
 
 namespace Juampi92\Phecks\Tests\Violations;
 
-use Illuminate\Support\Collection;
 use Juampi92\Phecks\Domain\Contracts\Check;
 use Juampi92\Phecks\Domain\DTOs\FileMatch;
+use Juampi92\Phecks\Domain\MatchCollection;
 use Juampi92\Phecks\Domain\Violations\Violation;
 use Juampi92\Phecks\Domain\Violations\ViolationBuilder;
 use Juampi92\Phecks\Tests\TestCase;
@@ -16,9 +16,9 @@ class ViolationBuilderTest extends TestCase
     {
         // Arrange
         $violation = ViolationBuilder::make()
-            ->file(new FileMatch($file = './file/MyFile.php', $line = 55))
-            ->identifier($identifier = 'MyIdentifier')
-            ->build();
+            ->message('This is important! Fix it!')
+            ->setIdentifier($identifier = 'MyIdentifier')
+            ->build($this->getCheck(), new FileMatch($file = './file/MyFile.php', $line = 55));
 
         $this->assertInstanceOf(Violation::class, $violation);
 
@@ -31,14 +31,8 @@ class ViolationBuilderTest extends TestCase
     {
         // Arrange
         $violation = ViolationBuilder::make()
-            ->file(new FileMatch($file = './file/MyFile.php', $line = 55))
-            ->check($check = new class() implements Check {
-                public function run(): Collection
-                {
-                    return collect();
-                }
-            })
-            ->build();
+            ->message('This is important! Fix it!')
+            ->build($check = $this->getCheck(), new FileMatch($file = './file/MyFile.php', $line = 55));
 
         $this->assertInstanceOf(Violation::class, $violation);
 
@@ -47,29 +41,26 @@ class ViolationBuilderTest extends TestCase
         $this->assertEquals("$file:$line", $violation->getLocation());
     }
 
-    /**
-     * @dataProvider invalidCreationDataProvider
-     */
-    public function test_should_fail_when_invalid_data(ViolationBuilder $builder, string $exception): void
+    public function test_should_fail_when_invalid_data(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectDeprecationMessageMatches("/$exception/i");
+        $this->expectDeprecationMessageMatches("/The violation must have a message/i");
 
-        $builder->build();
+        ViolationBuilder::make()->build($this->getCheck(), new FileMatch('./tests/Random.php'));
     }
 
-    public function invalidCreationDataProvider(): array
+    private function getCheck(): Check
     {
-        return [
-            'Only file' => [
-                'builder' => ViolationBuilder::make()->file(new FileMatch('./tests/Testing.php')),
-                'exception' => "The violation\'s identifier is required",
-            ],
-            'No file' => [
-                'builder' => ViolationBuilder::make()->identifier('FooBar'),
-                'exception' => "The file is needed when building a violation",
-            ],
-        ];
+        return new class() implements Check {
+            public function getMatches(): MatchCollection
+            {
+                return collect();
+            }
+
+            public function processMatch($match, FileMatch $file): array
+            {
+                return [];
+            }
+        };
     }
 }
-

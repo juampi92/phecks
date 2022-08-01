@@ -54,18 +54,6 @@ class MatchCollection implements Countable
     }
 
     /**
-     * @param callable(TValue, FileMatch): Violation $callable
-     */
-    public function mapViolations(callable $callable): ViolationsCollection
-    {
-        return new ViolationsCollection(
-            $this->matches
-                ->map(fn (MatchValue $match) => $callable($match->value, $match->file))
-                ->all(),
-        );
-    }
-
-    /**
      * @param callable(TValue, FileMatch): bool|null $callable
      */
     public function filter($callable = null): self
@@ -97,7 +85,7 @@ class MatchCollection implements Countable
     /**
      * @return Collection<MatchValue<TValue>>
      */
-    public function getMatches(): Collection
+    public function getItems(): Collection
     {
         return $this->matches;
     }

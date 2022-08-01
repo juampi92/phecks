@@ -19,8 +19,8 @@ class MatchCollectionTest extends TestCase
         $matchCollection = MatchCollection::fromFiles($files);
 
         $this->assertEquals(2, $matchCollection->count());
-        $this->assertEquals('./file/one.php', $matchCollection->getMatches()->first()->value->file);
-        $this->assertEquals('./file/two.php', $matchCollection->getMatches()->last()->value->file);
+        $this->assertEquals('./file/one.php', $matchCollection->getItems()->first()->value->file);
+        $this->assertEquals('./file/two.php', $matchCollection->getItems()->last()->value->file);
     }
 
     public function test_it_filters_and_rejects(): void
@@ -43,7 +43,7 @@ class MatchCollectionTest extends TestCase
         $matchCollection->filter(fn (FileMatch $file) => $file->file === './file/two.php');
 
         $this->assertEquals(1, $matchCollection->count());
-        $this->assertEquals('./file/two.php', $matchCollection->getMatches()->first()->value->file);
+        $this->assertEquals('./file/two.php', $matchCollection->getItems()->first()->value->file);
     }
 
     public function test_extractors_can_remove_items(): void
