@@ -38,38 +38,47 @@ class ReflectionMethodExtractorTest extends TestCase
         $this->assertEquals(true, $methodBar->isPrivate());
     }
 
-    public function test_it_should_filter_methods(): void
+    /**
+     *
+     * @dataProvider methodFilterDataProvider
+     */
+    public function test_it_should_filter_methods(ReflectionMethodExtractor $extractor, array $matches): void
     {
         // Arrange
         $reflectionClass = new ReflectionClass(SimpleClassForReflection::class);
 
-        $extractor = new ReflectionMethodExtractor(ReflectionMethod::IS_PRIVATE);
-
         // Act
         $result = $extractor->extract($reflectionClass);
 
         // Assert
-        $this->assertEquals(1, $result->count());
+        $this->assertEquals(count($matches), $result->count());
 
         /** @var ReflectionMethod $method */
-        $method = $result->first();
+        $this->assertEqualsCanonicalizing(
+            $matches,
+            $result->map->getName()->all()
+        );
+    }
 
-        $this->assertEquals('bar', $method->getName());
-
-        // --- Filter Public methods
-
-        // Arrange
-        $extractor = new ReflectionMethodExtractor(ReflectionMethod::IS_PUBLIC);
-
-        // Act
-        $result = $extractor->extract($reflectionClass);
-
-        // Assert
-        $this->assertEquals(1, $result->count());
-
-        /** @var ReflectionMethod $method */
-        $method = $result->first();
-
-        $this->assertEquals('foo', $method->getName());
+    public function methodFilterDataProvider(): array
+    {
+        return [
+            'private' => [
+                'extractor' => new ReflectionMethodExtractor(ReflectionMethod::IS_PRIVATE),
+                'matches' => [
+                    'bar',
+                ],
+            ],
+            'public' => [
+                'extractor' => new ReflectionMethodExtractor(ReflectionMethod::IS_PUBLIC),
+                'matches' => [
+                    'foo',
+                ],
+            ],
+            'static' => [
+                'extractor' => new ReflectionMethodExtractor(ReflectionMethod::IS_STATIC),
+                'matches' => [],
+            ],
+        ];
     }
 }
