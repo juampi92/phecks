@@ -68,17 +68,23 @@ class ViolationBuilder
 
     public function build(): Violation
     {
+        if (!$this->identifier && !$this->check) {
+            throw new RuntimeException('The violation\'s identifier is required. Use ->identifier(\'string\') or ->check(Check $check) to use the check\'s classname');
+        }
+
+        if (!$this->file) {
+            throw new RuntimeException('The file is needed when building a violation. Use ->file(FileMatch $file) to set it.');
+        }
+
         $identifier = $this->identifier ?: (
             $this->check ?
                 class_basename($this->check)
-                : throw new RuntimeException('The violation\'s identifier is required. Use ->identifier(\'string\') or ->check(Check $check) to use the check\'s classname')
+                : null
         );
-
-        $file = $this->file ?: throw new RuntimeException('The file is needed when building a violation. Use ->file(FileMatch $file) to set it.');
 
         return new Violation(
             $identifier,
-            $file,
+            $this->file,
             new Explanation(
                 $this->explanation,
                 $this->tip,

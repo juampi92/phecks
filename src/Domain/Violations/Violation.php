@@ -39,8 +39,8 @@ class Violation
         );
     }
 
-    public function getExplanation(): ?string
+    public function getExplanation(): Explanation
     {
-        return $this->explanation->getText();
+        return $this->explanation;
     }
 }
