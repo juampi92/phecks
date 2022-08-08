@@ -7,6 +7,9 @@ use Juampi92\Phecks\Domain\Contracts\Extractor;
 use ReflectionClass;
 use ReflectionMethod;
 
+/**
+ * @implements Extractor<ReflectionClass<object>, ReflectionMethod>
+ */
 class ReflectionMethodExtractor implements Extractor
 {
     private ?int $filter;
@@ -21,8 +24,8 @@ class ReflectionMethodExtractor implements Extractor
     }
 
     /**
-     * @param ReflectionClass $match
-     * @return Collection<ReflectionMethod>
+     * @param ReflectionClass<object> $match
+     * @return Collection<array-key, ReflectionMethod>
      */
     public function extract($match): Collection
     {

@@ -3,7 +3,6 @@
 namespace Juampi92\Phecks\Domain\Sources;
 
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Collection;
 use Juampi92\Phecks\Domain\Contracts\Source;
 use Juampi92\Phecks\Domain\DTOs\FileMatch;
 use Juampi92\Phecks\Domain\MatchCollection;

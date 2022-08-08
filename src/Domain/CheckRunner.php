@@ -9,7 +9,6 @@ use Juampi92\Phecks\Domain\DTOs\MatchValue;
 use Juampi92\Phecks\Domain\Violations\Violation;
 use Juampi92\Phecks\Domain\Violations\ViolationBuilder;
 use Juampi92\Phecks\Domain\Violations\ViolationsCollection;
-use Juampi92\Phecks\Domain\Violations\ViolationTransformer;
 
 class CheckRunner
 {
