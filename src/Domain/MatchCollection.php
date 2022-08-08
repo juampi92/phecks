@@ -7,38 +7,47 @@ use Illuminate\Support\Collection;
 use Juampi92\Phecks\Domain\Contracts\Extractor;
 use Juampi92\Phecks\Domain\DTOs\FileMatch;
 use Juampi92\Phecks\Domain\DTOs\MatchValue;
-use Juampi92\Phecks\Domain\Violations\Violation;
-use Juampi92\Phecks\Domain\Violations\ViolationsCollection;
 
 /**
- * @template TValue
+ * @template TMatch
  */
 class MatchCollection implements Countable
 {
-    /** @var Collection<MatchValue<TValue>> */
+    /** @var Collection<array-key, MatchValue<TMatch>> */
     private Collection $matches;
 
     /**
-     * @param array<MatchValue<TValue>>|Collection<MatchValue<TValue>>|null $matches
+     * @param array<MatchValue<TMatch>>|Collection<array-key, MatchValue<TMatch>> $matches
      */
-    public function __construct($matches)
+    public function __construct($matches = [])
     {
         $this->matches = collect($matches);
     }
 
     /**
-     * @param array<FileMatch>|Collection<FileMatch> $files
+     * @param array<FileMatch>|Collection<array-key, FileMatch> $files
      * @return MatchCollection<FileMatch>
      */
     public static function fromFiles($files): self
     {
         return new self(
             collect($files)
-                ->map(fn (FileMatch $file) => MatchValue::fromFile($file))
+                ->map(
+                    // @phpstan-ignore-next-line
+                    fn (FileMatch $file) => MatchValue::fromFile($file)
+                )
                 ->all(),
         );
     }
 
+    /**
+     * This method is immutable.
+     *
+     * @template TMatchInput of TMatch
+     * @template TMatchOutput
+     * @param Extractor<TMatchInput, TMatchOutput> $extractor
+     * @return static<TMatchOutput>
+     */
     public function extract(Extractor $extractor): self
     {
         return new MatchCollection(
@@ -54,7 +63,8 @@ class MatchCollection implements Countable
     }
 
     /**
-     * @param callable(TValue, FileMatch): bool|null $callable
+     * @param callable(TMatch, FileMatch): bool|null $callable
+     * @return $this<TMatch>
      */
     public function filter($callable = null): self
     {
@@ -66,7 +76,8 @@ class MatchCollection implements Countable
     }
 
     /**
-     * @param callable(TValue, FileMatch): bool|null $callable
+     * @param callable(TMatch, FileMatch): bool|null $callable
+     * @return $this<TMatch>
      */
     public function reject($callable = null): self
     {
@@ -83,7 +94,7 @@ class MatchCollection implements Countable
     }
 
     /**
-     * @return Collection<MatchValue<TValue>>
+     * @return Collection<array-key, MatchValue<TMatch>>
      */
     public function getItems(): Collection
     {

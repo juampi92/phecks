@@ -14,8 +14,12 @@ class MatchString
         $this->value = $value;
     }
 
+    /**
+     * @return Collection<array-key, mixed>
+     */
     public function collect(): Collection
     {
+        // @phpstan-ignore-next-line
         return collect(
             json_decode($this->value, true),
         );

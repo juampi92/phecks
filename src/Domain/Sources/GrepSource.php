@@ -10,6 +10,9 @@ use Juampi92\Phecks\Domain\Sources\Flags\GrepFlags;
 use RuntimeException;
 use Symfony\Component\Process\Process;
 
+/**
+ * @implements Source<FileMatch>
+ */
 class GrepSource implements Source
 {
     protected ?string $pattern = null;

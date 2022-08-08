@@ -4,13 +4,12 @@ namespace Juampi92\Phecks\Domain\DTOs;
 
 /**
  * @template TValue
- * @property TValue $value
  */
 class MatchValue
 {
     public FileMatch $file;
 
-    /** @var mixed */
+    /** @var TValue */
     public $value;
 
     /**

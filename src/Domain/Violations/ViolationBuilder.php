@@ -65,6 +65,9 @@ class ViolationBuilder
         return $this;
     }
 
+    /**
+     * @param Check<mixed> $check
+     */
     public function setCheckIfEmpty(Check $check): self
     {
         $this->setIdentifierIfEmpty(class_basename($check));
@@ -90,6 +93,9 @@ class ViolationBuilder
         return $this;
     }
 
+    /**
+     * @param Check<mixed> $check
+     */
     public function build(Check $check, FileMatch $fileMatch): Violation
     {
         if (!$this->message) {

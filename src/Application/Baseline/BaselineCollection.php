@@ -46,7 +46,7 @@ class BaselineCollection
 
     /**
      * Get Violations that ocurred more times than what the baseline recorded.
-     * @return Collection<Violation>
+     * @return Collection<array-key, Violation>
      */
     public function getExceededViolations(): Collection
     {

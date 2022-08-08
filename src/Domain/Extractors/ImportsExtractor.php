@@ -6,11 +6,14 @@ use Illuminate\Support\Collection;
 use Juampi92\Phecks\Domain\Contracts\Extractor;
 use Juampi92\Phecks\Domain\DTOs\FileMatch;
 
+/**
+ * @implements  Extractor<FileMatch, class-string>
+ */
 class ImportsExtractor implements Extractor
 {
     /**
      * @param FileMatch $match
-     * @return Collection<class-string>
+     * @return Collection<array-key, class-string>
      */
     public function extract($match): Collection
     {
@@ -18,7 +21,7 @@ class ImportsExtractor implements Extractor
     }
 
     /**
-     * @return Collection<class-string>
+     * @return Collection<array-key, class-string>
      */
     private function getImportsFromFile(FileMatch $file): Collection
     {

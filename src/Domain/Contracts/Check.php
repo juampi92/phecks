@@ -8,12 +8,18 @@ use Juampi92\Phecks\Domain\MatchCollection;
 use Juampi92\Phecks\Domain\Violations\Violation;
 use Juampi92\Phecks\Domain\Violations\ViolationBuilder;
 
+/**
+ * @template TMatch
+ */
 interface Check
 {
+    /**
+     * @return MatchCollection<TMatch>
+     */
     public function getMatches(): MatchCollection;
 
     /**
-     * @param mixed $match
+     * @param TMatch $match
      * @param FileMatch $file
      * @return array<ViolationBuilder>
      */

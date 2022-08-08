@@ -5,11 +5,16 @@ namespace Juampi92\Phecks\Domain\Extractors;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Juampi92\Phecks\Domain\Contracts\Extractor;
+use Juampi92\Phecks\Domain\DTOs\FileMatch;
 
+/**
+ * @implements Extractor<class-string, string>
+ */
 class NamespaceExtractor implements Extractor
 {
     /**
-     * @param string $match
+     * @param class-string $match
+     * @return Collection<array-key, string>
      */
     public function extract($match): Collection
     {

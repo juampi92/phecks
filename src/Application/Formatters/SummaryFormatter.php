@@ -3,6 +3,7 @@
 namespace Juampi92\Phecks\Application\Formatters;
 
 use Juampi92\Phecks\Application\Contracts\Formatter;
+use Juampi92\Phecks\Domain\Violations\Violation;
 use Juampi92\Phecks\Domain\Violations\ViolationsCollection;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -23,8 +24,9 @@ class SummaryFormatter implements Formatter
         $this->output->writeln('');
 
         $violations
-            ->groupBy->getIdentifier()
-            ->each(function (ViolationsCollection $violations, string $target) {
+            ->groupBy(fn (Violation $violation): string => $violation->getIdentifier())
+            // @phpstan-ignore-next-line
+            ->each(function (ViolationsCollection $violations, string $target): void {
                 $this->output->writeln("<bg=red> Error </> {$target}. Total: {$violations->count()}");
             });
 

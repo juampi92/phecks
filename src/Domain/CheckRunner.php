@@ -30,7 +30,7 @@ class CheckRunner
     }
 
     /**
-     * @param Check $check
+     * @param Check<mixed> $check
      * @return array<Violation>
      */
     public function runCheck(Check $check): array
@@ -48,7 +48,7 @@ class CheckRunner
     }
 
     /**
-     * @return Collection<Check>
+     * @return Collection<array-key, Check<mixed>>
      */
     private function getChecks(): Collection
     {
