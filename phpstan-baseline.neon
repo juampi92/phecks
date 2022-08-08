@@ -1,0 +1,56 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Support\\\\Collection\\<\\(int\\|string\\),Juampi92\\\\Phecks\\\\Domain\\\\Violations\\\\Violation\\>\\:\\:map\\(\\) expects callable\\(Juampi92\\\\Phecks\\\\Domain\\\\Violations\\\\Violation, \\(int\\|string\\)\\)\\: array\\<int, int\\>, Closure\\(Illuminate\\\\Support\\\\Collection\\)\\: array\\<int, int\\> given\\.$#"
+			count: 1
+			path: src/Application/Baseline/BaselineCollection.php
+
+		-
+			message: "#^Call to an undefined method League\\\\Flysystem\\\\FilesystemOperator\\:\\:getAdapter\\(\\)\\.$#"
+			count: 1
+			path: src/Application/Baseline/BaselineLoader.php
+
+		-
+			message: "#^Constructor of class Juampi92\\\\Phecks\\\\Application\\\\Formatters\\\\ConsoleFormatter has an unused parameter \\$input\\.$#"
+			count: 1
+			path: src/Application/Formatters/ConsoleFormatter.php
+
+		-
+			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Support\\\\Collection\\<\\(int\\|string\\),Juampi92\\\\Phecks\\\\Domain\\\\Violations\\\\Violation\\>\\:\\:each\\(\\) expects callable\\(Juampi92\\\\Phecks\\\\Domain\\\\Violations\\\\Violation, \\(int\\|string\\)\\)\\: mixed, Closure\\(Juampi92\\\\Phecks\\\\Domain\\\\Violations\\\\ViolationsCollection, string\\)\\: void given\\.$#"
+			count: 1
+			path: src/Application/Formatters/ConsoleFormatter.php
+
+		-
+			message: "#^Offset string on array\\<non\\-empty\\-string, class\\-string\\<Juampi92\\\\Phecks\\\\Application\\\\Contracts\\\\Formatter\\>\\> on left side of \\?\\? always exists and is not nullable\\.$#"
+			count: 1
+			path: src/Application/Formatters/FormatResolver.php
+
+		-
+			message: "#^Constructor of class Juampi92\\\\Phecks\\\\Application\\\\Formatters\\\\GithubActionFormatter has an unused parameter \\$input\\.$#"
+			count: 1
+			path: src/Application/Formatters/GithubActionFormatter.php
+
+		-
+			message: "#^Constructor of class Juampi92\\\\Phecks\\\\Application\\\\Formatters\\\\SummaryFormatter has an unused parameter \\$input\\.$#"
+			count: 1
+			path: src/Application/Formatters/SummaryFormatter.php
+
+		-
+			message: "#^Method Juampi92\\\\Phecks\\\\Domain\\\\CheckRunner\\:\\:getChecks\\(\\) should return Illuminate\\\\Support\\\\Collection\\<\\(int\\|string\\), Juampi92\\\\Phecks\\\\Domain\\\\Contracts\\\\Check\\<mixed\\>\\> but returns Illuminate\\\\Support\\\\Collection\\<\\(int\\|string\\), Juampi92\\\\Phecks\\\\Domain\\\\Contracts\\\\Check\\>\\.$#"
+			count: 1
+			path: src/Domain/CheckRunner.php
+
+		-
+			message: "#^Unable to resolve the template type TKey in call to function collect$#"
+			count: 1
+			path: src/Domain/CheckRunner.php
+
+		-
+			message: "#^Unable to resolve the template type TValue in call to function collect$#"
+			count: 1
+			path: src/Domain/CheckRunner.php
+
+		-
+			message: "#^Property Juampi92\\\\Phecks\\\\Domain\\\\MatchCollection\\<TMatch\\>\\:\\:\\$matches \\(Illuminate\\\\Support\\\\Collection\\<\\(int\\|string\\), Juampi92\\\\Phecks\\\\Domain\\\\DTOs\\\\MatchValue\\<TMatch\\>\\>\\) does not accept Illuminate\\\\Support\\\\Collection\\<\\(int\\|string\\), array\\<TKey of \\(int\\|string\\), TValue\\>\\|bool\\|Juampi92\\\\Phecks\\\\Domain\\\\DTOs\\\\MatchValue\\<TMatch\\>\\>\\.$#"
+			count: 1
+			path: src/Domain/MatchCollection.php

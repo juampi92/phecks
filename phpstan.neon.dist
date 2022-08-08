@@ -1,0 +1,10 @@
+includes:
+    - ./vendor/nunomaduro/larastan/extension.neon
+    - ./phpstan-baseline.neon
+parameters:
+    paths:
+        - src
+    level: 7
+    #excludePaths:
+    checkMissingIterableValueType: false
+    reportUnmatchedIgnoredErrors: false

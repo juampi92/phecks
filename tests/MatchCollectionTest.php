@@ -19,8 +19,8 @@ class MatchCollectionTest extends TestCase
         $matchCollection = MatchCollection::fromFiles($files);
 
         $this->assertEquals(2, $matchCollection->count());
-        $this->assertEquals('./file/one.php', $matchCollection->getMatches()->first()->value->file);
-        $this->assertEquals('./file/two.php', $matchCollection->getMatches()->last()->value->file);
+        $this->assertEquals('./file/one.php', $matchCollection->getItems()->first()->value->file);
+        $this->assertEquals('./file/two.php', $matchCollection->getItems()->last()->value->file);
     }
 
     public function test_it_filters_and_rejects(): void
@@ -43,7 +43,7 @@ class MatchCollectionTest extends TestCase
         $matchCollection->filter(fn (FileMatch $file) => $file->file === './file/two.php');
 
         $this->assertEquals(1, $matchCollection->count());
-        $this->assertEquals('./file/two.php', $matchCollection->getMatches()->first()->value->file);
+        $this->assertEquals('./file/two.php', $matchCollection->getItems()->first()->value->file);
     }
 
     public function test_extractors_can_remove_items(): void
@@ -66,9 +66,12 @@ class MatchCollectionTest extends TestCase
 
         $this->assertEquals(4, $matchCollection->count());
 
-        $matchCollection->extract($remover);
+        $newMatchCollection = $matchCollection->extract($remover);
 
-        $this->assertEquals(0, $matchCollection->count());
+        $this->assertEquals(0, $newMatchCollection->count());
+
+        // The original collection wasn't mutated
+        $this->assertEquals(4, $matchCollection->count());
     }
 
     public function test_extractors_can_add_items(): void
@@ -91,8 +94,11 @@ class MatchCollectionTest extends TestCase
 
         $this->assertEquals(4, $matchCollection->count());
 
-        $matchCollection->extract($duplicator);
+        $newMatchCollection = $matchCollection->extract($duplicator);
 
-        $this->assertEquals(8, $matchCollection->count());
+        $this->assertEquals(8, $newMatchCollection->count());
+
+        // The original collection wasn't mutated
+        $this->assertEquals(4, $matchCollection->count());
     }
 }

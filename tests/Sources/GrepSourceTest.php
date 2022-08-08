@@ -15,6 +15,6 @@ class GrepSourceTest extends TestCase
             ->run();
 
         $this->assertEquals(1, $result->count());
-        $this->assertEquals('class SubclassC extends ClassA', $result->getMatches()->first()->value->context);
+        $this->assertEquals('class SubclassC extends ClassA', $result->getItems()->first()->value->context);
     }
 }

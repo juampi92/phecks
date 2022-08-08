@@ -5,7 +5,7 @@ namespace Juampi92\Phecks\Domain\Violations;
 use Illuminate\Support\Collection;
 
 /**
- * @extend Collection<Violation>
+ * @extends Collection<array-key, Violation>
  */
 class ViolationsCollection extends Collection
 {
