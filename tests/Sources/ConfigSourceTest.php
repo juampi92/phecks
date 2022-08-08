@@ -28,12 +28,12 @@ class ConfigSourceTest extends TestCase
         $this->assertCount(3, $result);
 
         // Assert Values
-        $this->assertEquals(['key' => 'my-testing-config-key.my_config_value', 'value' => 55], $result->getMatches()->first()->value);
-        $this->assertEquals(['key' => 'my-testing-config-key.my_second_config_value.foo', 'value' => 'bar'], $result->getMatches()->get(1)->value);
-        $this->assertEquals(['key' => 'other-file.foo2', 'value' => 'bar2'], $result->getMatches()->last()->value);
+        $this->assertEquals(['key' => 'my-testing-config-key.my_config_value', 'value' => 55], $result->getItems()->first()->value);
+        $this->assertEquals(['key' => 'my-testing-config-key.my_second_config_value.foo', 'value' => 'bar'], $result->getItems()->get(1)->value);
+        $this->assertEquals(['key' => 'other-file.foo2', 'value' => 'bar2'], $result->getItems()->last()->value);
 
         // Assert Files
-        $this->assertEquals('./config/my-testing-config-key.php', $result->getMatches()->first()->file->file);
-        $this->assertEquals('./config/other-file.php', $result->getMatches()->last()->file->file);
+        $this->assertEquals('./config/my-testing-config-key.php', $result->getItems()->first()->file->file);
+        $this->assertEquals('./config/other-file.php', $result->getItems()->last()->file->file);
     }
 }

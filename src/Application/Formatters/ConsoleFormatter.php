@@ -38,8 +38,12 @@ class ConsoleFormatter implements Formatter
                         $this->output->writeln('    <options=bold>Location:</> ' . $location);
                     }
 
-                    if ($explanation = $violation->getExplanation()) {
-                        $this->output->writeln('    <options=bold>Explanation:</> ' . $explanation);
+                    if ($message = $violation->getMessage()) {
+                        $this->output->writeln('    <options=bold>Explanation:</> ' . $message);
+                    }
+
+                    if ($tip = $violation->getTip()) {
+                        $this->output->writeln('    <options=bold>💡 Tip:</> ' . $tip);
                     }
                 });
             });

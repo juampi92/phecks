@@ -7,6 +7,9 @@ use Juampi92\Phecks\Domain\Extractors\ClassExtractor;
 use Juampi92\Phecks\Domain\MatchCollection;
 use RuntimeException;
 
+/**
+ * @implements Source<class-string>
+ */
 class ClassSource implements Source
 {
     private FileSource $fileSource;
@@ -47,7 +50,7 @@ class ClassSource implements Source
             ->directory($this->dir)
             ->recursive($this->recursive)
             ->run()
-            ->extract(resolve(ClassExtractor::class))
+            ->extract(new ClassExtractor())
             ->filter();
     }
 }

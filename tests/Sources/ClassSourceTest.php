@@ -16,10 +16,10 @@ class ClassSourceTest extends TestCase
             ->run();
 
         $this->assertGreaterThan(1, $result->count());
-        $this->assertInstanceOf($result->getMatches()->first()->value, resolve($result->getMatches()->first()->value));
+        $this->assertInstanceOf($result->getItems()->first()->value, resolve($result->getItems()->first()->value));
 
         $namespaces = $result
-            ->getMatches()
+            ->getItems()
             ->map(function (MatchValue $match) {
                 $basename = class_basename($match->value);
 
@@ -38,10 +38,10 @@ class ClassSourceTest extends TestCase
             ->run();
 
         $this->assertGreaterThan(1, $result->count());
-        $this->assertInstanceOf($result->getMatches()->first()->value, resolve($result->getMatches()->first()->value));
+        $this->assertInstanceOf($result->getItems()->first()->value, resolve($result->getItems()->first()->value));
 
         $namespaces = $result
-            ->getMatches()
+            ->getItems()
             ->map(function (MatchValue $match) {
                 $basename = class_basename($match->value);
 

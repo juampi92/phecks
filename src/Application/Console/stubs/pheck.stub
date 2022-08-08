@@ -19,18 +19,29 @@ class {{ class }} implements Check
     }
 
     /**
-     * @return Collection<Violation>
+     * Use a Source to find matches.
+     * You can filter, reject and
+     *
+     * @return MatchCollection
      */
-    public function run(): Collection
+    public function getMatches(): MatchCollection
     {
-        return $this->source
-            ->run()
-            ->mapViolations(function ($match, FileMatch $file) {
-                return ViolationBuilder::make()
-                    ->identifier('{{ class }}')
-                    ->file($file)
-                    ->explanation('Explain the error here.')
-                    ->build();
-            });
+        return $this->source->run();
+    }
+
+    /**
+     * Process here the output of the method getMatches.
+     * This method must return an array of ViolationBuilder instances.
+     * Ignore the match returning an empty array.
+     *
+     * @param mixed $match
+     * @param FileMatch $file
+     * @return array<ViolationBuilder>
+     */
+    public function processMatch($match, FileMatch $file): array
+    {
+        return [
+            ViolationBuilder::make()->message('Explain the error here.');
+        ];
     }
 }

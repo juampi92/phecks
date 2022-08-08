@@ -6,10 +6,14 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Juampi92\Phecks\Domain\Contracts\Extractor;
 
+/**
+ * @implements Extractor<class-string, string>
+ */
 class NamespaceExtractor implements Extractor
 {
     /**
-     * @param string $match
+     * @param class-string $match
+     * @return Collection<array-key, string>
      */
     public function extract($match): Collection
     {

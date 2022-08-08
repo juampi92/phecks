@@ -8,28 +8,24 @@ use RuntimeException;
 
 class ViolationBuilder
 {
-    protected ?Check $check;
+    protected ?string $identifier;
 
     protected ?FileMatch $file;
 
-    protected ?string $explanation;
+    protected ?string $message;
 
     protected ?string $tip;
 
-    protected ?string $identifier;
-
     public function __construct(
-        ?Check $check = null,
+        ?string $identifier = null,
         ?FileMatch $file = null,
-        ?string $explanation = null,
-        ?string $tip = null,
-        ?string $identifier = null
+        ?string $message = null,
+        ?string $tip = null
     ) {
-        $this->check = $check;
-        $this->file = $file;
-        $this->explanation = $explanation;
-        $this->tip = $tip;
         $this->identifier = $identifier;
+        $this->file = $file;
+        $this->message = $message;
+        $this->tip = $tip;
     }
 
     public static function make(): self
@@ -37,52 +33,84 @@ class ViolationBuilder
         return new self();
     }
 
-    public function file(FileMatch $file): self
+    public function setFile(FileMatch $file): self
     {
         $this->file = $file;
 
         return $this;
     }
 
-    public function identifier(string $identifier): self
+    public function setFileIfEmpty(FileMatch $file): self
+    {
+        if (!$this->file) {
+            $this->setFile($file);
+        }
+
+        return $this;
+    }
+
+    public function setIdentifier(string $identifier): self
     {
         $this->identifier = $identifier;
 
         return $this;
     }
 
-    public function check(Check $check): self
+    public function setIdentifierIfEmpty(string $identifier): self
     {
-        $this->check = $check;
+        if (!$this->identifier) {
+            $this->setIdentifier($identifier);
+        }
 
         return $this;
     }
 
-    public function explanation(?string $text, ?string $tip = null): self
+    /**
+     * @param Check<mixed> $check
+     */
+    public function setCheckIfEmpty(Check $check): self
     {
-        $this->explanation = $text;
-        $this->tip ??= $tip;
+        $this->setIdentifierIfEmpty(class_basename($check));
 
         return $this;
     }
 
-    public function build(): Violation
+    public function message(?string $text, ?string $tip = null): self
     {
-        $identifier = $this->identifier ?: (
-            $this->check ?
-                class_basename($this->check)
-                : throw new RuntimeException('The violation\'s identifier is required. Use ->identifier(\'string\') or ->check(Check $check) to use the check\'s classname')
-        );
+        $this->message = $text;
 
-        $file = $this->file ?: throw new RuntimeException('The file is needed when building a violation. Use ->file(FileMatch $file) to set it.');
+        if (!empty($tip)) {
+            $this->tip = $tip;
+        }
+
+        return $this;
+    }
+
+    public function setTip(?string $tip): self
+    {
+        $this->tip = $tip;
+
+        return $this;
+    }
+
+    /**
+     * @param Check<mixed> $check
+     */
+    public function build(Check $check, FileMatch $fileMatch): Violation
+    {
+        if (!$this->message) {
+            throw new RuntimeException('The violation must have a message. Use ->message(string $message, ?string $tip = null) to set it.');
+        }
+
+        $this
+            ->setCheckIfEmpty($check)
+            ->setFileIfEmpty($fileMatch);
 
         return new Violation(
-            $identifier,
-            $file,
-            new Explanation(
-                $this->explanation,
-                $this->tip,
-            ),
+            $this->identifier,
+            $this->file,
+            $this->message,
+            $this->tip,
         );
     }
 }
