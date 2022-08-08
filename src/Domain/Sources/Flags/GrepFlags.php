@@ -14,7 +14,7 @@ class GrepFlags
     public const LINE_NUMBER = '-n';
 
     /** @var string Ignore  case  distinctions,  so that characters that differ only in case match each other. */
-    public const IGNORE_CASE = '--ignore-case';
+    public const IGNORE_CASE = '-i';
 
     /** @var string Interpret PATTERNS as extended regular expressions (EREs, see below). */
     public const EXTENDED_REGEXP = '-E';
