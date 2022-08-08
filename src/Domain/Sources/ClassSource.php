@@ -47,7 +47,7 @@ class ClassSource implements Source
             ->directory($this->dir)
             ->recursive($this->recursive)
             ->run()
-            ->extract(resolve(ClassExtractor::class))
+            ->extract(new ClassExtractor())
             ->filter();
     }
 }

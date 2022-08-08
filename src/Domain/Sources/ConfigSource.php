@@ -25,14 +25,20 @@ class ConfigSource implements Source
     {
         return new MatchCollection(
             collect($this->config->all())
-                ->flatMap(function ($value, string $configName) {
-                    $file = new FileMatch("./config/{$configName}.php");
+                ->flatMap(
+                    /**
+                     * @param mixed $value
+                     * @returns Collection<TConfig>
+                     */
+                    function ($value, string $configName): Collection {
+                        $file = new FileMatch("./config/{$configName}.php");
 
-                    return collect(Arr::dot([$configName => $value]))
+                        return collect(Arr::dot([$configName => $value]))
                         ->map(function ($value, string $key) use ($file): MatchValue {
                             return new MatchValue($file, ['key' => $key, 'value' => $value]);
                         });
-                })
+                    }
+                )
                 ->values(),
         );
     }

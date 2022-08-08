@@ -41,16 +41,16 @@ class MatchCollection implements Countable
 
     public function extract(Extractor $extractor): self
     {
-        $this->matches = $this->matches
-            ->flatMap(
-                function (MatchValue $item) use ($extractor) {
-                    return $extractor
-                        ->extract($item->value)
-                        ->map(fn ($value): MatchValue => $item->setValue($value));
-                },
-            );
-
-        return $this;
+        return new MatchCollection(
+            $this->matches
+                ->flatMap(
+                    function (MatchValue $item) use ($extractor) {
+                        return $extractor
+                            ->extract($item->value)
+                            ->map(fn ($value): MatchValue => $item->setValue($value));
+                    },
+                )
+        );
     }
 
     /**

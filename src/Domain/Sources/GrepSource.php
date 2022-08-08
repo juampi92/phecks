@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 use Juampi92\Phecks\Domain\Contracts\Source;
 use Juampi92\Phecks\Domain\DTOs\FileMatch;
 use Juampi92\Phecks\Domain\MatchCollection;
+use Juampi92\Phecks\Domain\Sources\Flags\GrepFlags;
 use RuntimeException;
 use Symfony\Component\Process\Process;
 
@@ -15,7 +16,12 @@ class GrepSource implements Source
 
     protected array $files = [];
 
-    protected string $flags = 'RHn';
+    /** @var array<string> */
+    protected array $flags = [
+        GrepFlags::DEFERENCE_RECURSIVE,
+        GrepFlags::WITH_FILENAME,
+        GrepFlags::LINE_NUMBER,
+    ];
 
     public function __construct()
     {
@@ -39,16 +45,30 @@ class GrepSource implements Source
         return $this;
     }
 
-    public function setFlags(string $flags): self
+    /**
+     * @param string|array<string> $flags
+     */
+    public function setFlags($flags): self
     {
+        if (!is_array($flags)) {
+            $flags = func_get_args();
+        }
+
         $this->flags = $flags;
 
         return $this;
     }
 
-    public function addFlags(string $flags): self
+    /**
+     * @param string|array<string> $flags
+     */
+    public function addFlags($flags): self
     {
-        $this->flags .= $flags;
+        if (!is_array($flags)) {
+            $flags = func_get_args();
+        }
+
+        $this->flags = array_merge($this->flags, $flags);
 
         return $this;
     }
@@ -59,8 +79,9 @@ class GrepSource implements Source
     public function run(): MatchCollection
     {
         $files = implode(' ', $this->files) ?: './app';
+        $flags = implode(' ', $this->flags);
 
-        $process = Process::fromShellCommandline("grep -{$this->flags} \"{$this->pattern}\" {$files}");
+        $process = Process::fromShellCommandline("grep {$flags} \"{$this->pattern}\" {$files}");
         $process->run();
 
         if ($process->getExitCode() > 1) {

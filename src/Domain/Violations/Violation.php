@@ -51,4 +51,9 @@ class Violation
     {
         return $this->tip;
     }
+
+    public function getFile(): FileMatch
+    {
+        return $this->file;
+    }
 }

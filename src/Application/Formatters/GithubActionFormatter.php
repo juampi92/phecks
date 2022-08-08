@@ -20,8 +20,8 @@ class GithubActionFormatter implements Formatter
     public function format(ViolationsCollection $violations): void
     {
         $violations->each(function (Violation $violation) {
-            $file = $this->getRelativePath($violation->file->file);
-            $line = $violation->file->line ?? 1;
+            $file = $this->getRelativePath($violation->getFile()->file);
+            $line = $violation->getFile()->line ?? 1;
             $title = $violation->getIdentifier();
             $message = $violation->getMessage();
 

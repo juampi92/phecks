@@ -27,10 +27,10 @@ class ImportsExtractor implements Extractor
         $i = 0;
 
         if (!is_resource($fp)) {
-            return collect();
+            return collect([]);
         }
 
-        $imports = collect();
+        $imports = collect([]);
 
         while (true) {
             if (feof($fp)) {
