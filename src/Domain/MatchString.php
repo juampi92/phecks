@@ -41,7 +41,6 @@ class MatchString
                     return new FileMatch(
                         $file,
                         (int) $line,
-                        null,
                         $context,
                     );
                 }),

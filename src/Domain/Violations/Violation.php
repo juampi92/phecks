@@ -35,11 +35,15 @@ class Violation
     public function getLocation(): ?string
     {
         return sprintf(
-            '%s%s%s',
+            '%s%s',
             $this->file->file,
             $this->file->line ? ":{$this->file->line}" : '',
-            $this->file->method ? " @{$this->file->method}" : '',
         );
+    }
+
+    public function getLine(): ?int
+    {
+        return $this->file->line;
     }
 
     public function getMessage(): string

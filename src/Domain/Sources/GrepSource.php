@@ -101,7 +101,6 @@ class GrepSource implements Source
                     return new FileMatch(
                         $file,
                         (int) $line,
-                        null,
                         $context,
                     );
                 }),
