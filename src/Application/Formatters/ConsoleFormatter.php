@@ -7,48 +7,44 @@ use Juampi92\Phecks\Domain\Violations\Violation;
 use Juampi92\Phecks\Domain\Violations\ViolationsCollection;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ConsoleFormatter implements Formatter
 {
-    private OutputInterface $output;
+    private SymfonyStyle $style;
 
     public function __construct(
         InputInterface $input,
         OutputInterface $output
     ) {
-        $this->output = $output;
+        $this->style = new SymfonyStyle($input, $output);
     }
 
     public function format(ViolationsCollection $violations): void
     {
-        $this->output->writeln('');
+        if ($violations->isEmpty()) {
+            $this->style->success('No errors');
+
+            return;
+        }
 
         $violations
             ->groupBy(fn (Violation $violation): string => $violation->getTarget())
             ->each(function (ViolationsCollection $violations, string $target) {
-                $this->output->writeln('');
-                $this->output->writeln("<bg=red> ◼ {$target} </>");
-                $this->output->writeln('<options=bold>Errors</>: ' . $violations->count());
+                $this->style->table(
+                    ['Line', $target],
+                    $violations->map(function (Violation $violation): array {
+                        $errorLine = sprintf("%s  <options=bold>(%s)</>", $violation->getMessage(), $violation->getIdentifier());
+                        $tipLine = $violation->getTip() ? "\n<href={$violation->getTip()}>💡 Read more.</>" : '';
 
-                $violations->each(function (Violation $violation) {
-                    $this->output->writeln('');
-                    $this->output->writeln('    <options=bold>Error:</> ' . $violation->getIdentifier());
-
-                    if ($location = $violation->getLocation()) {
-                        $this->output->writeln('    <options=bold>Location:</> ' . $location);
-                    }
-
-                    if ($message = $violation->getMessage()) {
-                        $this->output->writeln('    <options=bold>Explanation:</> ' . $message);
-                    }
-
-                    if ($tip = $violation->getTip()) {
-                        $this->output->writeln('    <options=bold>💡 Tip:</> ' . $tip);
-                    }
-                });
+                        return [
+                            $violation->getLine() ?: '-',
+                            $errorLine . $tipLine,
+                        ];
+                    })->all()
+                );
             });
 
-        $this->output->writeln('');
-        $this->output->writeln('Total errors: ' . $violations->count());
+        $this->style->error("Found {$violations->count()} errors");
     }
 }
