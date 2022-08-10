@@ -11,7 +11,14 @@ use Juampi92\Phecks\Domain\MatchCollection;
 use Juampi92\Phecks\Domain\MatchString;
 
 /**
- * @template TRoute of array{name: string, uri: string}
+ * @template TRoute of array{
+ *  domain: string,
+ *  method: string,
+ *  uri: string,
+ *  name: string,
+ *  action: string,
+ *  middleware: array<string>
+ * }
  * @implements Source<TRoute>
  */
 class RouteCommandSource implements Source
@@ -28,24 +35,11 @@ class RouteCommandSource implements Source
     }
 
     /**
-     * @param array<string>|string $column
-     * @return $this<TRoute>
-     */
-    public function columns($column): self
-    {
-        $columns = is_array($column) ? $column : func_get_args();
-        $this->columns = $columns;
-
-        return $this;
-    }
-
-    /**
      * @return MatchCollection<TRoute>
      */
     public function run(): MatchCollection
     {
-        $columns = array_merge($this->columns, ['name', 'uri']);
-        $this->artisan->call('route:list', ['--columns' => $columns, '--json' => true]);
+        $this->artisan->call('route:list', ['--json' => true]);
 
         /** @var Collection<array-key, TRoute> $routes */
         $routes = (new MatchString($this->artisan->output()))->collect();
