@@ -4,6 +4,7 @@ namespace Juampi92\Phecks\Application\Baseline;
 
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Filesystem\Filesystem;
+use Illuminate\Support\Facades\Storage;
 
 class BaselineLoader
 {
@@ -12,13 +13,10 @@ class BaselineLoader
     private Filesystem $filesystem;
 
     public function __construct(
-        Repository $config,
-        Filesystem $filesystem
+        Repository $config
     ) {
-        $this->filesystem = $filesystem;
         $this->config = $config;
-        // Hack needed to access files from the absolute path.
-        $this->filesystem->getDriver()->getAdapter()->setPathPrefix('\\');
+        $this->filesystem = Storage::build(base_path());
     }
 
     public function load(): BaselineCollection
@@ -46,6 +44,6 @@ class BaselineLoader
 
     private function getPath(): string
     {
-        return base_path($this->config->get('phecks.baseline'));
+        return $this->config->get('phecks.baseline');
     }
 }
