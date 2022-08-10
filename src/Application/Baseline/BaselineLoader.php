@@ -3,8 +3,7 @@
 namespace Juampi92\Phecks\Application\Baseline;
 
 use Illuminate\Contracts\Config\Repository;
-use Illuminate\Contracts\Filesystem\Filesystem;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Filesystem\Filesystem;
 
 class BaselineLoader
 {
@@ -13,10 +12,11 @@ class BaselineLoader
     private Filesystem $filesystem;
 
     public function __construct(
-        Repository $config
+        Repository $config,
+        Filesystem $filesystem
     ) {
         $this->config = $config;
-        $this->filesystem = Storage::build(base_path());
+        $this->filesystem = $filesystem;
     }
 
     public function load(): BaselineCollection
