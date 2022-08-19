@@ -16,6 +16,8 @@ class ViolationBuilder
 
     protected ?string $url;
 
+    protected string $severity;
+
     public function __construct(
         ?string $identifier = null,
         ?FileMatch $file = null,
@@ -26,6 +28,7 @@ class ViolationBuilder
         $this->file = $file;
         $this->message = $message;
         $this->url = $url;
+        $this->severity = ViolationSeverity::ERROR;
     }
 
     public static function make(): self
@@ -89,6 +92,13 @@ class ViolationBuilder
     public function setUrl(?string $url): self
     {
         $this->url = $url;
+
+        return $this;
+    }
+
+    public function warning(): self
+    {
+        $this->severity = ViolationSeverity::WARNING;
 
         return $this;
     }

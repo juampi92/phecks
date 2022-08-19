@@ -9,4 +9,12 @@ use Illuminate\Support\Collection;
  */
 class ViolationsCollection extends Collection
 {
+    public function whereError(): self
+    {
+        return $this
+            ->filter(
+                fn (Violation $violation): bool
+                    => $violation->getSeverity() === ViolationSeverity::ERROR
+            );
+    }
 }

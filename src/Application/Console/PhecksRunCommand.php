@@ -50,7 +50,7 @@ class PhecksRunCommand extends Command
         $formatter = FormatResolver::resolve($this->option('format'), $this->input, $this->getOutput());
         $formatter->format($violations);
 
-        if ($violations->isNotEmpty()) {
+        if ($violations->whereError()->isNotEmpty()) {
             return self::FAILURE;
         }
 

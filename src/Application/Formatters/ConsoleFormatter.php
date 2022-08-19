@@ -2,9 +2,11 @@
 
 namespace Juampi92\Phecks\Application\Formatters;
 
+use Illuminate\Support\Collection;
 use Juampi92\Phecks\Application\Contracts\Formatter;
 use Juampi92\Phecks\Domain\Violations\Violation;
 use Juampi92\Phecks\Domain\Violations\ViolationsCollection;
+use Juampi92\Phecks\Domain\Violations\ViolationSeverity;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -45,6 +47,19 @@ class ConsoleFormatter implements Formatter
                 );
             });
 
-        $this->style->error("Found {$violations->count()} errors");
+        /** @var Collection<ViolationSeverity::*, int> $severitiesCount */
+        $severitiesCount = $violations
+            ->groupBy(fn (Violation $violation): string => $violation->getSeverity())
+            ->map(fn (Collection $violationsCollection): int => $violationsCollection->count());
+
+        $errorsCount = (int) $severitiesCount->get(ViolationSeverity::ERROR, 0);
+        if ($errorsCount > 0) {
+            $this->style->error("Found {$errorsCount} errors");
+        }
+
+        $warningsCount = (int) $severitiesCount->get(ViolationSeverity::WARNING, 0);
+        if ($warningsCount > 0) {
+            $this->style->error("Found {$warningsCount} errors");
+        }
     }
 }

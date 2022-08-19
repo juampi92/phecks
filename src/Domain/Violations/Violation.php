@@ -14,12 +14,19 @@ class Violation
 
     private ?string $url;
 
-    public function __construct(string $identifier, FileMatch $file, string $message, ?string $url = null)
+    /** @var ViolationSeverity::* */
+    private string $severity;
+
+    /**
+     * @param ViolationSeverity::* $severity
+     */
+    public function __construct(string $identifier, FileMatch $file, string $message, ?string $url = null, string $severity = ViolationSeverity::ERROR)
     {
         $this->identifier = $identifier;
         $this->file = $file;
         $this->message = $message;
         $this->url = $url;
+        $this->severity = $severity;
     }
 
     public function getIdentifier(): string
@@ -59,5 +66,13 @@ class Violation
     public function getFile(): FileMatch
     {
         return $this->file;
+    }
+
+    /**
+     * @return ViolationSeverity::*
+     */
+    public function getSeverity(): string
+    {
+        return $this->severity;
     }
 }

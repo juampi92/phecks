@@ -5,6 +5,7 @@ namespace Juampi92\Phecks\Application\Formatters;
 use Juampi92\Phecks\Application\Contracts\Formatter;
 use Juampi92\Phecks\Domain\Violations\Violation;
 use Juampi92\Phecks\Domain\Violations\ViolationsCollection;
+use Juampi92\Phecks\Domain\Violations\ViolationSeverity;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -24,9 +25,11 @@ class GithubActionFormatter implements Formatter
             $line = $violation->getFile()->line ?? 1;
             $title = $violation->getIdentifier();
             $message = $violation->getMessage();
+            $errorType = $this->parseSeverity($violation->getSeverity());
 
             $this->output->writeln(sprintf(
-                '::error file=%s,line=%s,title=%s::%s',
+                '::%s file=%s,line=%s,title=%s::%s',
+                $errorType,
                 $this->escapeData($file),
                 $line,
                 $title,
@@ -46,5 +49,19 @@ class GithubActionFormatter implements Formatter
             "\r" => '%0D',
             "\n" => '%0A',
         ]);
+    }
+
+    /**
+     * @param ViolationSeverity::* $severity
+     */
+    private function parseSeverity(string $severity): string
+    {
+        switch ($severity) {
+            case ViolationSeverity::WARNING:
+                return 'warning';
+            case ViolationSeverity::ERROR:
+            default:
+                return 'error';
+        }
     }
 }
