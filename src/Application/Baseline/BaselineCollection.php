@@ -75,7 +75,8 @@ class BaselineCollection
                 ->map(
                     fn (Collection $violations): array => $violations
                         ->groupBy(fn (Violation $violation) => $violation->getTarget())
-                        ->map->count()
+                        ->map(fn (Collection $violations): int => $violations->count())
+                        ->sortKeys()
                         ->all(),
                 )
                 ->all(),
