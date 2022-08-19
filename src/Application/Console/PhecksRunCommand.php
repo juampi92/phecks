@@ -30,16 +30,16 @@ class PhecksRunCommand extends Command
     /**
      * Execute the console command.
      */
-    public function handle(): int
+    public function handle(CheckRunner $checkRunner, BaselineFilter $baselineFilter, BaselineGenerator $baselineGenerator): int
     {
-        $violations = resolve(CheckRunner::class)->run();
+        $violations = $checkRunner->run();
 
         if (!$this->option('ignore-baseline') && !$this->option('generate-baseline')) {
-            $violations = resolve(BaselineFilter::class)->filter($violations);
+            $violations = $baselineFilter->filter($violations);
         }
 
         if ($this->option('generate-baseline')) {
-            resolve(BaselineGenerator::class)->generate($violations);
+            $baselineGenerator->generate($violations);
 
             $this->info('Baseline generated correctly.');
             $this->info($violations->count() . ' violations stored.');
