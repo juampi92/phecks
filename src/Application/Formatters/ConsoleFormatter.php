@@ -35,11 +35,11 @@ class ConsoleFormatter implements Formatter
                     ['Line', $target],
                     $violations->map(function (Violation $violation): array {
                         $errorLine = sprintf("%s  <options=bold>(%s)</>", $violation->getMessage(), $violation->getIdentifier());
-                        $tipLine = $violation->getTip() ? "\n<href={$violation->getTip()}>💡 Read more.</>" : '';
+                        $urlLine = $violation->getUrl() ? "\n<href={$violation->getUrl()}>💡 Read more.</>" : '';
 
                         return [
                             $violation->getLine() ?: '-',
-                            $errorLine . $tipLine,
+                            $errorLine . $urlLine,
                         ];
                     })->all()
                 );

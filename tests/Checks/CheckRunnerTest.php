@@ -34,6 +34,6 @@ class CheckRunnerTest extends TestCase
         $this->assertEquals('SingleViolationCheck', $violations[0]->getIdentifier());
         $this->assertEquals('./test/MyMatch.php', $violations[0]->getTarget());
         $this->assertEquals('./test/MyMatch.php:55', $violations[0]->getLocation());
-        $this->assertNull($violations[0]->getTip());
+        $this->assertNull($violations[0]->getUrl());
     }
 }

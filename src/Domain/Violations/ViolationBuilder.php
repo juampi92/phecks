@@ -14,18 +14,18 @@ class ViolationBuilder
 
     protected ?string $message;
 
-    protected ?string $tip;
+    protected ?string $url;
 
     public function __construct(
         ?string $identifier = null,
         ?FileMatch $file = null,
         ?string $message = null,
-        ?string $tip = null
+        ?string $url = null
     ) {
         $this->identifier = $identifier;
         $this->file = $file;
         $this->message = $message;
-        $this->tip = $tip;
+        $this->url = $url;
     }
 
     public static function make(): self
@@ -75,20 +75,20 @@ class ViolationBuilder
         return $this;
     }
 
-    public function message(?string $text, ?string $tip = null): self
+    public function message(?string $text, ?string $url = null): self
     {
         $this->message = $text;
 
-        if (!empty($tip)) {
-            $this->tip = $tip;
+        if (!empty($url)) {
+            $this->url = $url;
         }
 
         return $this;
     }
 
-    public function setTip(?string $tip): self
+    public function setUrl(?string $url): self
     {
-        $this->tip = $tip;
+        $this->url = $url;
 
         return $this;
     }
@@ -110,7 +110,7 @@ class ViolationBuilder
             $this->identifier,
             $this->file,
             $this->message,
-            $this->tip,
+            $this->url,
         );
     }
 }

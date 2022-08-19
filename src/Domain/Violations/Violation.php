@@ -12,14 +12,14 @@ class Violation
 
     private string $message;
 
-    private ?string $tip;
+    private ?string $url;
 
-    public function __construct(string $identifier, FileMatch $file, string $message, ?string $tip = null)
+    public function __construct(string $identifier, FileMatch $file, string $message, ?string $url = null)
     {
         $this->identifier = $identifier;
         $this->file = $file;
         $this->message = $message;
-        $this->tip = $tip;
+        $this->url = $url;
     }
 
     public function getIdentifier(): string
@@ -51,9 +51,9 @@ class Violation
         return $this->message;
     }
 
-    public function getTip(): ?string
+    public function getUrl(): ?string
     {
-        return $this->tip;
+        return $this->url;
     }
 
     public function getFile(): FileMatch

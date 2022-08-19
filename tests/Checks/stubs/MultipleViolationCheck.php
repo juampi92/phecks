@@ -21,7 +21,7 @@ class MultipleViolationCheck implements Check
     {
         return [
             ViolationBuilder::make()->message('This is my error message!'),
-            ViolationBuilder::make()->message('This is my SECOND error message!')->setTip('Read more here.'),
+            ViolationBuilder::make()->message('This is my SECOND error message!')->setUrl('Read more here.'),
         ];
     }
 }
