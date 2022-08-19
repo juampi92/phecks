@@ -46,7 +46,7 @@ class MatchCollectionTest extends TestCase
         $this->assertEquals('./file/two.php', $matchCollection->getItems()->first()->value->file);
     }
 
-    public function test_extractors_can_remove_items(): void
+    public function test_pipes_can_remove_items(): void
     {
         $remover = new class() implements Pipe {
             public function __invoke($input): Collection
@@ -66,7 +66,7 @@ class MatchCollectionTest extends TestCase
 
         $this->assertEquals(4, $matchCollection->count());
 
-        $newMatchCollection = $matchCollection->extract($remover);
+        $newMatchCollection = $matchCollection->pipe($remover);
 
         $this->assertEquals(0, $newMatchCollection->count());
 
@@ -74,7 +74,7 @@ class MatchCollectionTest extends TestCase
         $this->assertEquals(4, $matchCollection->count());
     }
 
-    public function test_extractors_can_add_items(): void
+    public function test_pipes_can_add_items(): void
     {
         $duplicator = new class() implements Pipe {
             public function __invoke($input): Collection
@@ -94,7 +94,30 @@ class MatchCollectionTest extends TestCase
 
         $this->assertEquals(4, $matchCollection->count());
 
-        $newMatchCollection = $matchCollection->extract($duplicator);
+        $newMatchCollection = $matchCollection->pipe($duplicator);
+
+        $this->assertEquals(8, $newMatchCollection->count());
+
+        // The original collection wasn't mutated
+        $this->assertEquals(4, $matchCollection->count());
+    }
+
+    public function test_pipes_can_be_callables(): void
+    {
+        $duplicator = fn ($input): Collection => collect([$input, $input]);
+
+        $files = collect([
+            new FileMatch('./file/one.php'),
+            new FileMatch('./file/two.php'),
+            new FileMatch('./file/three.php'),
+            new FileMatch('./file/four.php'),
+        ]);
+
+        $matchCollection = MatchCollection::fromFiles($files);
+
+        $this->assertEquals(4, $matchCollection->count());
+
+        $newMatchCollection = $matchCollection->pipe($duplicator);
 
         $this->assertEquals(8, $newMatchCollection->count());
 

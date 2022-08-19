@@ -4,7 +4,7 @@ namespace Juampi92\Phecks\Domain;
 
 use Countable;
 use Illuminate\Support\Collection;
-use Juampi92\Phecks\Domain\Contracts\Extractor;
+use Juampi92\Phecks\Domain\Contracts\Pipe;
 use Juampi92\Phecks\Domain\DTOs\FileMatch;
 use Juampi92\Phecks\Domain\DTOs\MatchValue;
 
@@ -45,19 +45,16 @@ class MatchCollection implements Countable
      *
      * @template TMatchInput of TMatch
      * @template TMatchOutput
-     * @param Extractor<TMatchInput, TMatchOutput> $extractor
+     * @param Pipe<TMatchInput, TMatchOutput>|callable(TMatchInput): TMatchOutput $pipe
      * @return static<TMatchOutput>
      */
-    public function extract(Extractor $extractor): self
+    public function pipe($pipe): self
     {
         return new MatchCollection(
             $this->matches
                 ->flatMap(
-                    function (MatchValue $item) use ($extractor) {
-                        return $extractor
-                            ->extract($item->value)
-                            ->map(fn ($value): MatchValue => $item->setValue($value));
-                    },
+                    fn (MatchValue $item) => $pipe($item->value)
+                        ->map(fn ($value): MatchValue => $item->setValue($value)),
                 )
         );
     }
@@ -66,7 +63,7 @@ class MatchCollection implements Countable
      * @param callable(TMatch, FileMatch): bool|null $callable
      * @return $this<TMatch>
      */
-    public function filter($callable = null): self
+    public function filter(callable $callable = null): self
     {
         $callable = $callable ?? (fn ($item) => (bool) $item);
 
@@ -76,10 +73,10 @@ class MatchCollection implements Countable
     }
 
     /**
-     * @param callable(TMatch, FileMatch): bool|null $callable
+     * @param callable(TMatch, FileMatch): bool|null|null $callable
      * @return $this<TMatch>
      */
-    public function reject($callable = null): self
+    public function reject(callable $callable = null): self
     {
         $callable = $callable ?? (fn ($item) => (bool) $item);
 
