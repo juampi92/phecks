@@ -8,11 +8,11 @@ use Illuminate\Support\Collection;
  * @template TMatchInput
  * @template TMatchOutput
  */
-interface Extractor
+interface Pipe
 {
     /**
-     * @param TMatchInput $match
+     * @param TMatchInput $input
      * @return Collection<array-key, TMatchOutput>
      */
-    public function extract($match): Collection;
+    public function __invoke($input): Collection;
 }

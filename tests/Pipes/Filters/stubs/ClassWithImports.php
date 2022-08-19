@@ -1,11 +1,10 @@
 <?php
 
-namespace Juampi92\Phecks\Tests\Extractors\stubs;
+namespace Juampi92\Phecks\Tests\Pipes\Filters\stubs;
 
-use Illuminate\Support\Collection;
 use Juampi92\Phecks\Domain\MatchString;
 
-class ClassWithImports extends Collection
+class ClassWithImports extends MyCollection
 {
     public function testMethod(): MatchString
     {

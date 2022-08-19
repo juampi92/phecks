@@ -3,7 +3,7 @@
 namespace Juampi92\Phecks\Tests;
 
 use Illuminate\Support\Collection;
-use Juampi92\Phecks\Domain\Contracts\Extractor;
+use Juampi92\Phecks\Domain\Contracts\Pipe;
 use Juampi92\Phecks\Domain\DTOs\FileMatch;
 use Juampi92\Phecks\Domain\MatchCollection;
 
@@ -48,8 +48,8 @@ class MatchCollectionTest extends TestCase
 
     public function test_extractors_can_remove_items(): void
     {
-        $remover = new class() implements Extractor {
-            public function extract($match): Collection
+        $remover = new class() implements Pipe {
+            public function __invoke($input): Collection
             {
                 return collect();
             }
@@ -76,10 +76,10 @@ class MatchCollectionTest extends TestCase
 
     public function test_extractors_can_add_items(): void
     {
-        $duplicator = new class() implements Extractor {
-            public function extract($match): Collection
+        $duplicator = new class() implements Pipe {
+            public function __invoke($input): Collection
             {
-                return collect([$match, $match]);
+                return collect([$input, $input]);
             }
         };
 

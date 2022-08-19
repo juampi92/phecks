@@ -11,11 +11,12 @@
   "keywords": ["laravel", "api"],
   "require": {
     "php" : "^7.4|^8.0|^8.1",
+    "ext-json": "*",
     "illuminate/console": "^8.0|^9.0",
     "illuminate/contracts": "^8.0|^9.0",
     "illuminate/filesystem": "^8.0|^9.0",
     "illuminate/support": "^8.0|^9.0",
-    "ext-json": "*"
+    "roave/better-reflection": "^5.7"
   },
   "require-dev": {
     "orchestra/testbench": "^5.0|^6.0|^7.0",
