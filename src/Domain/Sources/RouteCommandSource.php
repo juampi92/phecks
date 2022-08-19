@@ -11,7 +11,7 @@ use Juampi92\Phecks\Domain\MatchCollection;
 use Juampi92\Phecks\Domain\MatchString;
 
 /**
- * @template TRoute of array{
+ * @phpstan-type TRoute array{
  *  domain: string,
  *  method: string,
  *  uri: string,

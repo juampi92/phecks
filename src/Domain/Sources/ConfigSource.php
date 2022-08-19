@@ -11,7 +11,7 @@ use Juampi92\Phecks\Domain\DTOs\MatchValue;
 use Juampi92\Phecks\Domain\MatchCollection;
 
 /**
- * @template TConfig of array{key: string, value: mixed}
+ * @phpstan-type TConfig array{key: string, value: mixed}
  * @implements Source<TConfig>
  */
 class ConfigSource implements Source

@@ -3,12 +3,13 @@
 namespace Juampi92\Phecks\Domain\Sources;
 
 use Juampi92\Phecks\Domain\Contracts\Source;
-use Juampi92\Phecks\Domain\Extractors\ClassExtractor;
 use Juampi92\Phecks\Domain\MatchCollection;
+use Juampi92\Phecks\Domain\Pipes\Extractors\ClassExtractor;
+use Roave\BetterReflection\Reflection\ReflectionClass;
 use RuntimeException;
 
 /**
- * @implements Source<class-string>
+ * @implements Source<ReflectionClass>
  */
 class ClassSource implements Source
 {
@@ -38,7 +39,7 @@ class ClassSource implements Source
     }
 
     /**
-     * @return MatchCollection<class-string>
+     * @return MatchCollection<ReflectionClass>
      */
     public function run(): MatchCollection
     {
@@ -50,7 +51,7 @@ class ClassSource implements Source
             ->directory($this->dir)
             ->recursive($this->recursive)
             ->run()
-            ->extract(new ClassExtractor())
+            ->pipe(new ClassExtractor())
             ->filter();
     }
 }

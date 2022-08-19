@@ -2,10 +2,10 @@
 
 namespace Juampi92\Phecks\Tests\Sources;
 
-use Illuminate\Support\Str;
 use Juampi92\Phecks\Domain\DTOs\MatchValue;
 use Juampi92\Phecks\Domain\Sources\ClassSource;
 use Juampi92\Phecks\Tests\TestCase;
+use Roave\BetterReflection\Reflection\ReflectionClass;
 
 class ClassSourceTest extends TestCase
 {
@@ -16,14 +16,14 @@ class ClassSourceTest extends TestCase
             ->run();
 
         $this->assertGreaterThan(1, $result->count());
-        $this->assertInstanceOf($result->getItems()->first()->value, resolve($result->getItems()->first()->value));
+        /** @var ReflectionClass $class */
+        $class = $result->getItems()->first()->value;
+        $this->assertInstanceOf($class->getName(), resolve($class->getName()));
 
         $namespaces = $result
             ->getItems()
             ->map(function (MatchValue $match) {
-                $basename = class_basename($match->value);
-
-                return Str::before($match->value, "\\{$basename}");
+                return $match->value->getNamespaceName();
             })
             ->unique();
 
@@ -38,14 +38,15 @@ class ClassSourceTest extends TestCase
             ->run();
 
         $this->assertGreaterThan(1, $result->count());
-        $this->assertInstanceOf($result->getItems()->first()->value, resolve($result->getItems()->first()->value));
+
+        /** @var ReflectionClass $class */
+        $class = $result->getItems()->first()->value;
+        $this->assertInstanceOf($class->getName(), resolve($class->getName()));
 
         $namespaces = $result
             ->getItems()
             ->map(function (MatchValue $match) {
-                $basename = class_basename($match->value);
-
-                return Str::before($match->value, "\\{$basename}");
+                return $match->value->getNamespaceName();
             })
             ->unique();
 
