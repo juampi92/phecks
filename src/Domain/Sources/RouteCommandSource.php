@@ -9,9 +9,10 @@ use Juampi92\Phecks\Domain\DTOs\FileMatch;
 use Juampi92\Phecks\Domain\DTOs\MatchValue;
 use Juampi92\Phecks\Domain\MatchCollection;
 use Juampi92\Phecks\Domain\MatchString;
+use Juampi92\Phecks\Domain\Sources\ValueObjects\RouteInfo;
 
 /**
- * @phpstan-type TRoute array{
+ * @phpstan-type TRouteArray array{
  *  domain: string,
  *  method: string,
  *  uri: string,
@@ -19,7 +20,7 @@ use Juampi92\Phecks\Domain\MatchString;
  *  action: string,
  *  middleware: array<string>
  * }
- * @implements Source<TRoute>
+ * @implements Source<RouteInfo>
  */
 class RouteCommandSource implements Source
 {
@@ -35,26 +36,33 @@ class RouteCommandSource implements Source
     }
 
     /**
-     * @return MatchCollection<TRoute>
+     * @return MatchCollection<RouteInfo>
      */
     public function run(): MatchCollection
     {
         $this->artisan->call('route:list', ['--json' => true]);
 
-        /** @var Collection<array-key, TRoute> $routes */
+        /** @var Collection<array-key, TRouteArray> $routes */
         $routes = (new MatchString($this->artisan->output()))->collect();
 
         return new MatchCollection(
             $routes
                 ->map(
                     /**
-                     * @param TRoute $route
-                     * @return MatchValue<TRoute>
+                     * @param TRouteArray $route
+                     * @return MatchValue<RouteInfo>
                      */
                     function ($route): MatchValue {
                         return new MatchValue(
                             new FileMatch('Route: ' . $route['uri'] . ' (name: ' . $route['name'] . ')'),
-                            $route,
+                            new RouteInfo(
+                                $route['domain'],
+                                $route['method'],
+                                $route['uri'],
+                                $route['name'],
+                                $route['action'],
+                                $route['middleware'],
+                            ),
                         );
                     },
                 )
