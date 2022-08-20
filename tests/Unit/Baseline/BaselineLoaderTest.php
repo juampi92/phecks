@@ -7,19 +7,20 @@ use Illuminate\Filesystem\Filesystem;
 use Juampi92\Phecks\Application\Baseline\BaselineCollection;
 use Juampi92\Phecks\Application\Baseline\BaselineLoader;
 use Juampi92\Phecks\Tests\Unit\TestCase;
+use Mockery;
 use Mockery\MockInterface;
 
 class BaselineLoaderTest extends TestCase
 {
-    public function test_should_return_empty_baseline_collection_when_baseline_file_does_not_exist()
+    public function test_should_return_empty_baseline_collection_when_baseline_file_does_not_exist(): void
     {
-        $config = \Mockery::mock(Repository::class, function (MockInterface $mock) {
+        $config = Mockery::mock(Repository::class, function (MockInterface $mock) {
             $mock->shouldReceive('get')
                 ->with('phecks.baseline')
                 ->andReturn('PATH_TO_JSON_BASELINE');
         });
 
-        $filesystem = \Mockery::mock(Filesystem::class, function (MockInterface $mock) {
+        $filesystem = Mockery::mock(Filesystem::class, function (MockInterface $mock) {
             $mock->shouldReceive('exists')
                 ->with('PATH_TO_JSON_BASELINE')
                 ->andReturn(false);
@@ -32,15 +33,15 @@ class BaselineLoaderTest extends TestCase
         $this->assertCount(0, $baseline->toArray());
     }
 
-    public function test_should_return_baseline_collection_from_file()
+    public function test_should_return_baseline_collection_from_file(): void
     {
-        $config = \Mockery::mock(Repository::class, function (MockInterface $mock) {
+        $config = Mockery::mock(Repository::class, function (MockInterface $mock) {
             $mock->shouldReceive('get')
                 ->with('phecks.baseline')
                 ->andReturn('PATH_TO_JSON_BASELINE');
         });
 
-        $filesystem = \Mockery::mock(Filesystem::class, function (MockInterface $mock) {
+        $filesystem = Mockery::mock(Filesystem::class, function (MockInterface $mock) {
             $mock->shouldReceive('exists')
                 ->with('PATH_TO_JSON_BASELINE')
                 ->andReturn(true);
@@ -57,17 +58,17 @@ class BaselineLoaderTest extends TestCase
         $this->assertEquals(['test' => 'test'], $baseline->toArray());
     }
 
-    public function test_should_save_baseline_collection()
+    public function test_should_save_baseline_collection(): void
     {
         $baseline = new BaselineCollection(['test' => 'test']);
 
-        $config = \Mockery::mock(Repository::class, function (MockInterface $mock) {
+        $config = Mockery::mock(Repository::class, function (MockInterface $mock) {
             $mock->shouldReceive('get')
                 ->with('phecks.baseline')
                 ->andReturn('PATH_TO_JSON_BASELINE');
         });
 
-        $filesystem = \Mockery::spy(Filesystem::class);
+        $filesystem = Mockery::spy(Filesystem::class);
 
         $loader = new BaselineLoader($config, $filesystem);
 
