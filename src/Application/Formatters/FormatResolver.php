@@ -12,7 +12,7 @@ class FormatResolver
     /** @var array<non-empty-string, class-string<Formatter>> */
     public const FORMATTERS = [
         'summary' => SummaryFormatter::class,
-        'github' => GithubActionFormatter::class,
+        'github' => GithubFormatter::class,
         'console' => ConsoleFormatter::class,
     ];
 

@@ -9,7 +9,7 @@ use Juampi92\Phecks\Domain\Violations\ViolationSeverity;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class GithubActionFormatter implements Formatter
+class GithubFormatter implements Formatter
 {
     protected OutputInterface $output;
 
