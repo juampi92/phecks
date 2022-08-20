@@ -6,6 +6,7 @@ use Illuminate\Filesystem\Filesystem;
 use Juampi92\Phecks\Domain\Contracts\Source;
 use Juampi92\Phecks\Domain\DTOs\FileMatch;
 use Juampi92\Phecks\Domain\MatchCollection;
+use Juampi92\Phecks\Support\PathNormalizer;
 use RuntimeException;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -52,7 +53,9 @@ class FileSource implements Source
         $method = $this->recursive ? 'allFiles' : 'files';
 
         /** @var array<SplFileInfo> */
-        $files = $this->filesystem->{$method}(base_path($this->dir));
+        $files = $this->filesystem->{$method}(
+            PathNormalizer::toAbsolute($this->dir)
+        );
 
         return MatchCollection::fromFiles(
             collect($files)

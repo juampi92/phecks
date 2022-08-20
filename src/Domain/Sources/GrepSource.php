@@ -7,6 +7,7 @@ use Juampi92\Phecks\Domain\Contracts\Source;
 use Juampi92\Phecks\Domain\DTOs\FileMatch;
 use Juampi92\Phecks\Domain\MatchCollection;
 use Juampi92\Phecks\Domain\Sources\Flags\GrepFlags;
+use Juampi92\Phecks\Support\PathNormalizer;
 use RuntimeException;
 use Symfony\Component\Process\Process;
 
@@ -43,6 +44,9 @@ class GrepSource implements Source
     public function files($files): self
     {
         $files = is_array($files) ? $files : func_get_args();
+
+        $files = array_map(fn (string $file) => PathNormalizer::toAbsolute($file), $files);
+
         $this->files = array_merge($this->files, $files);
 
         return $this;

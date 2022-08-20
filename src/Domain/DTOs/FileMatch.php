@@ -2,7 +2,7 @@
 
 namespace Juampi92\Phecks\Domain\DTOs;
 
-use Illuminate\Support\Str;
+use Juampi92\Phecks\Support\PathNormalizer;
 
 class FileMatch
 {
@@ -17,21 +17,8 @@ class FileMatch
         ?int $line = null,
         ?string $context = null
     ) {
-        $this->file = $this->fixFileRelativePath($file);
+        $this->file = PathNormalizer::toRelative($file);
         $this->line = $line;
         $this->context = $context;
-    }
-
-    private function fixFileRelativePath(string $file): string
-    {
-        $file = Str::of($file);
-
-        if (!$file->startsWith('./')) {
-            $file = $file->replaceFirst(base_path(), '/')
-                ->start('/')
-                ->start('.');
-        }
-
-        return (string) $file;
     }
 }

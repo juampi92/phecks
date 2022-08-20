@@ -6,6 +6,7 @@ use Juampi92\Phecks\Domain\Contracts\Source;
 use Juampi92\Phecks\Domain\DTOs\FileMatch;
 use Juampi92\Phecks\Domain\DTOs\MatchValue;
 use Juampi92\Phecks\Domain\MatchCollection;
+use Juampi92\Phecks\Support\PathNormalizer;
 use Roave\BetterReflection\BetterReflection;
 use Roave\BetterReflection\Reflection\ReflectionClass;
 use Roave\BetterReflection\Reflector\DefaultReflector;
@@ -30,16 +31,18 @@ class ClassSource implements Source
     }
 
     /**
-     * @param array<string>|string $dir
+     * @param array<string>|string $dirs
      * @return $this
      */
-    public function directory($dir): self
+    public function directory($dirs): self
     {
-        if (is_string($dir)) {
-            $dir = func_get_args();
+        if (is_string($dirs)) {
+            $dirs = func_get_args();
         }
 
-        $this->directories = array_merge($this->directories, $dir);
+        $dirs = array_map(fn (string $dir) => PathNormalizer::toAbsolute($dir), $dirs);
+
+        $this->directories = array_merge($this->directories, $dirs);
 
         return $this;
     }
