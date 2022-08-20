@@ -52,7 +52,7 @@ class FileSource implements Source
         $method = $this->recursive ? 'allFiles' : 'files';
 
         /** @var array<SplFileInfo> */
-        $files = $this->filesystem->{$method}($this->dir);
+        $files = $this->filesystem->{$method}(base_path($this->dir));
 
         return MatchCollection::fromFiles(
             collect($files)
