@@ -1,22 +1,17 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Support\\\\Collection\\<\\(int\\|string\\),Juampi92\\\\Phecks\\\\Domain\\\\Violations\\\\Violation\\>\\:\\:map\\(\\) expects callable\\(Juampi92\\\\Phecks\\\\Domain\\\\Violations\\\\Violation, \\(int\\|string\\)\\)\\: array\\<int, int\\>, Closure\\(Illuminate\\\\Support\\\\Collection\\)\\: array\\<int, int\\> given\\.$#"
+			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Support\\\\Collection\\<\\(int\\|string\\),Juampi92\\\\Phecks\\\\Domain\\\\Violations\\\\Violation\\>\\:\\:map\\(\\) expects callable\\(Juampi92\\\\Phecks\\\\Domain\\\\Violations\\\\Violation, \\(int\\|string\\)\\)\\: array\\<int\\>, Closure\\(Illuminate\\\\Support\\\\Collection\\)\\: array\\<int\\> given\\.$#"
 			count: 1
 			path: src/Application/Baseline/BaselineCollection.php
 
 		-
-			message: "#^Call to an undefined method League\\\\Flysystem\\\\FilesystemOperator\\:\\:getAdapter\\(\\)\\.$#"
-			count: 1
-			path: src/Application/Baseline/BaselineLoader.php
-
-		-
-			message: "#^Constructor of class Juampi92\\\\Phecks\\\\Application\\\\Formatters\\\\ConsoleFormatter has an unused parameter \\$input\\.$#"
+			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Support\\\\Collection\\<\\(int\\|string\\),Juampi92\\\\Phecks\\\\Domain\\\\Violations\\\\Violation\\>\\:\\:each\\(\\) expects callable\\(Juampi92\\\\Phecks\\\\Domain\\\\Violations\\\\Violation, \\(int\\|string\\)\\)\\: mixed, Closure\\(Juampi92\\\\Phecks\\\\Domain\\\\Violations\\\\ViolationsCollection, string\\)\\: void given\\.$#"
 			count: 1
 			path: src/Application/Formatters/ConsoleFormatter.php
 
 		-
-			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Support\\\\Collection\\<\\(int\\|string\\),Juampi92\\\\Phecks\\\\Domain\\\\Violations\\\\Violation\\>\\:\\:each\\(\\) expects callable\\(Juampi92\\\\Phecks\\\\Domain\\\\Violations\\\\Violation, \\(int\\|string\\)\\)\\: mixed, Closure\\(Juampi92\\\\Phecks\\\\Domain\\\\Violations\\\\ViolationsCollection, string\\)\\: void given\\.$#"
+			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Support\\\\Collection\\<\\(int\\|string\\),Juampi92\\\\Phecks\\\\Domain\\\\Violations\\\\Violation\\>\\:\\:map\\(\\) expects callable\\(Juampi92\\\\Phecks\\\\Domain\\\\Violations\\\\Violation, \\(int\\|string\\)\\)\\: int, Closure\\(Illuminate\\\\Support\\\\Collection\\)\\: int given\\.$#"
 			count: 1
 			path: src/Application/Formatters/ConsoleFormatter.php
 
@@ -26,14 +21,9 @@ parameters:
 			path: src/Application/Formatters/FormatResolver.php
 
 		-
-			message: "#^Constructor of class Juampi92\\\\Phecks\\\\Application\\\\Formatters\\\\GithubActionFormatter has an unused parameter \\$input\\.$#"
+			message: "#^Constructor of class Juampi92\\\\Phecks\\\\Application\\\\Formatters\\\\GithubFormatter has an unused parameter \\$input\\.$#"
 			count: 1
-			path: src/Application/Formatters/GithubActionFormatter.php
-
-		-
-			message: "#^Constructor of class Juampi92\\\\Phecks\\\\Application\\\\Formatters\\\\SummaryFormatter has an unused parameter \\$input\\.$#"
-			count: 1
-			path: src/Application/Formatters/SummaryFormatter.php
+			path: src/Application/Formatters/GithubFormatter.php
 
 		-
 			message: "#^Method Juampi92\\\\Phecks\\\\Domain\\\\CheckRunner\\:\\:getChecks\\(\\) should return Illuminate\\\\Support\\\\Collection\\<\\(int\\|string\\), Juampi92\\\\Phecks\\\\Domain\\\\Contracts\\\\Check\\<mixed\\>\\> but returns Illuminate\\\\Support\\\\Collection\\<\\(int\\|string\\), Juampi92\\\\Phecks\\\\Domain\\\\Contracts\\\\Check\\>\\.$#"
@@ -54,3 +44,53 @@ parameters:
 			message: "#^Property Juampi92\\\\Phecks\\\\Domain\\\\MatchCollection\\<TMatch\\>\\:\\:\\$matches \\(Illuminate\\\\Support\\\\Collection\\<\\(int\\|string\\), Juampi92\\\\Phecks\\\\Domain\\\\DTOs\\\\MatchValue\\<TMatch\\>\\>\\) does not accept Illuminate\\\\Support\\\\Collection\\<\\(int\\|string\\), array\\<TKey of \\(int\\|string\\), TValue\\>\\|bool\\|Juampi92\\\\Phecks\\\\Domain\\\\DTOs\\\\MatchValue\\<TMatch\\>\\>\\.$#"
 			count: 1
 			path: src/Domain/MatchCollection.php
+
+		-
+			message: "#^Method Juampi92\\\\Phecks\\\\Domain\\\\Pipes\\\\Filters\\\\WhereFileDoesntMatchFilter\\:\\:__invoke\\(\\) should return Illuminate\\\\Support\\\\Collection\\<\\(int\\|string\\), TInputOutput of Juampi92\\\\Phecks\\\\Domain\\\\DTOs\\\\FileMatch\\|Roave\\\\BetterReflection\\\\Reflection\\\\ReflectionClass\\> but returns Illuminate\\\\Support\\\\Collection\\<int, TInputOutput of Juampi92\\\\Phecks\\\\Domain\\\\DTOs\\\\FileMatch\\>\\.$#"
+			count: 1
+			path: src/Domain/Pipes/Filters/WhereFileDoesntMatchFilter.php
+
+		-
+			message: "#^Method Juampi92\\\\Phecks\\\\Domain\\\\Pipes\\\\Filters\\\\WhereFileDoesntMatchFilter\\:\\:__invoke\\(\\) should return Illuminate\\\\Support\\\\Collection\\<\\(int\\|string\\), TInputOutput of Juampi92\\\\Phecks\\\\Domain\\\\DTOs\\\\FileMatch\\|Roave\\\\BetterReflection\\\\Reflection\\\\ReflectionClass\\> but returns Illuminate\\\\Support\\\\Collection\\<int, TInputOutput of Roave\\\\BetterReflection\\\\Reflection\\\\ReflectionClass\\>\\.$#"
+			count: 1
+			path: src/Domain/Pipes/Filters/WhereFileDoesntMatchFilter.php
+
+		-
+			message: "#^Unreachable statement \\- code above always terminates\\.$#"
+			count: 1
+			path: src/Domain/Pipes/Filters/WhereFileDoesntMatchFilter.php
+
+		-
+			message: "#^Method Juampi92\\\\Phecks\\\\Domain\\\\Pipes\\\\Filters\\\\WhereFileMatchesFilter\\:\\:__invoke\\(\\) should return Illuminate\\\\Support\\\\Collection\\<\\(int\\|string\\), TInputOutput of Juampi92\\\\Phecks\\\\Domain\\\\DTOs\\\\FileMatch\\|Roave\\\\BetterReflection\\\\Reflection\\\\ReflectionClass\\> but returns Illuminate\\\\Support\\\\Collection\\<int, TInputOutput of Juampi92\\\\Phecks\\\\Domain\\\\DTOs\\\\FileMatch\\>\\.$#"
+			count: 1
+			path: src/Domain/Pipes/Filters/WhereFileMatchesFilter.php
+
+		-
+			message: "#^Method Juampi92\\\\Phecks\\\\Domain\\\\Pipes\\\\Filters\\\\WhereFileMatchesFilter\\:\\:__invoke\\(\\) should return Illuminate\\\\Support\\\\Collection\\<\\(int\\|string\\), TInputOutput of Juampi92\\\\Phecks\\\\Domain\\\\DTOs\\\\FileMatch\\|Roave\\\\BetterReflection\\\\Reflection\\\\ReflectionClass\\> but returns Illuminate\\\\Support\\\\Collection\\<int, TInputOutput of Roave\\\\BetterReflection\\\\Reflection\\\\ReflectionClass\\>\\.$#"
+			count: 1
+			path: src/Domain/Pipes/Filters/WhereFileMatchesFilter.php
+
+		-
+			message: "#^Unreachable statement \\- code above always terminates\\.$#"
+			count: 1
+			path: src/Domain/Pipes/Filters/WhereFileMatchesFilter.php
+
+		-
+			message: "#^Parameter \\#3 \\$arguments of class Juampi92\\\\Phecks\\\\Domain\\\\Sources\\\\ValueObjects\\\\ArtisanCommandInfo constructor expects array\\<non\\-empty\\-string, Juampi92\\\\Phecks\\\\Domain\\\\Sources\\\\ValueObjects\\\\ArtisanCommandArgument\\>, array\\<Juampi92\\\\Phecks\\\\Domain\\\\Sources\\\\ValueObjects\\\\ArtisanCommandArgument\\> given\\.$#"
+			count: 1
+			path: src/Domain/Sources/ArtisanListSource.php
+
+		-
+			message: "#^Parameter \\#4 \\$options of class Juampi92\\\\Phecks\\\\Domain\\\\Sources\\\\ValueObjects\\\\ArtisanCommandInfo constructor expects array\\<non\\-empty\\-string, Juampi92\\\\Phecks\\\\Domain\\\\Sources\\\\ValueObjects\\\\ArtisanCommandOption\\>, array\\<Juampi92\\\\Phecks\\\\Domain\\\\Sources\\\\ValueObjects\\\\ArtisanCommandOption\\> given\\.$#"
+			count: 1
+			path: src/Domain/Sources/ArtisanListSource.php
+
+		-
+			message: "#^Unable to resolve the template type TKey in call to function collect$#"
+			count: 3
+			path: src/Domain/Sources/ArtisanListSource.php
+
+		-
+			message: "#^Unable to resolve the template type TValue in call to function collect$#"
+			count: 3
+			path: src/Domain/Sources/ArtisanListSource.php
