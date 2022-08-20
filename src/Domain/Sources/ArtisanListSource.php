@@ -12,6 +12,7 @@ use Juampi92\Phecks\Domain\MatchString;
 use Juampi92\Phecks\Domain\Sources\ValueObjects\ArtisanCommandArgument;
 use Juampi92\Phecks\Domain\Sources\ValueObjects\ArtisanCommandInfo;
 use Juampi92\Phecks\Domain\Sources\ValueObjects\ArtisanCommandOption;
+use RuntimeException;
 
 /**
  * @implements Source<ArtisanCommandInfo>
@@ -39,14 +40,16 @@ class ArtisanListSource implements Source
 
     public function run(): MatchCollection
     {
-        $this->artisan->call('list', ['--format' => 'json']);
+        $exitCode = $this->artisan->call('list', ['--format' => 'json']);
+
+        if ($exitCode > 0) {
+            throw new RuntimeException("The command 'php artisan list' exited with a code of '$exitCode'");
+        }
+
+        $artisanList = (new MatchString($this->artisan->output()))->collect()->get('commands');
 
         return new MatchCollection(
-            collect(
-                (new MatchString($this->artisan->output()))
-                    ->collect()
-                    ->get('commands')
-            )
+            collect($artisanList)
                 ->when(!$this->showingHidden, function (Collection $commands): Collection {
                     return $commands->reject(fn ($command) => $command['hidden'] === true);
                 })
