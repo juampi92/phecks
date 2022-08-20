@@ -8,6 +8,9 @@ use Juampi92\Phecks\Domain\DTOs\FileMatch;
 use Roave\BetterReflection\BetterReflection;
 use Roave\BetterReflection\Reflection\ReflectionClass;
 use Roave\BetterReflection\Reflector\DefaultReflector;
+use Roave\BetterReflection\SourceLocator\Type\AggregateSourceLocator;
+use Roave\BetterReflection\SourceLocator\Type\AutoloadSourceLocator;
+use Roave\BetterReflection\SourceLocator\Type\DirectoriesSourceLocator;
 use Roave\BetterReflection\SourceLocator\Type\SingleFileSourceLocator;
 
 /**
@@ -22,7 +25,11 @@ class ClassExtractor implements Pipe
     public function __invoke($input): Collection
     {
         $astLocator = (new BetterReflection())->astLocator();
-        $reflector = new DefaultReflector(new SingleFileSourceLocator($input->file, $astLocator));
+        $sourceLocator = new AggregateSourceLocator([
+            new SingleFileSourceLocator($input->file, $astLocator),
+            new AutoloadSourceLocator(),
+        ]);
+        $reflector = new DefaultReflector($sourceLocator);
         $classes = $reflector->reflectAllClasses();
 
         return new Collection($classes);
