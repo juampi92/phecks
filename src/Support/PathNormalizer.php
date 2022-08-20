@@ -8,9 +8,9 @@ class PathNormalizer
 {
     public static function toAbsolute(string $path): string
     {
-        if (Str::startsWith('./', $path)) {
+        if (Str::startsWith($path, './')) {
             return base_path(
-                Str::after('.', $path),
+                Str::after($path, './'),
             );
         }
 
