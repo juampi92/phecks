@@ -46,4 +46,22 @@ class BaselineCollectionTest extends TestCase
         $this->assertEquals(1, $exceeded->count());
         $this->assertEquals('./app/FileTwo.php', $exceeded->first()->getTarget());
     }
+
+    public function test_should_group_files_in_order(): void
+    {
+        $violations = new ViolationsCollection([
+            new Violation('A', new FileMatch('./app/B.php'), 'lorem ipsum'),
+            new Violation('A', new FileMatch('./app/C.php'), 'lorem ipsum'),
+            new Violation('A', new FileMatch('./app/B.php'), 'lorem ipsum 2'),
+            new Violation('A', new FileMatch('./app/A.php'), 'lorem ipsum'),
+        ]);
+
+        $baseline = BaselineCollection::fromViolations($violations);
+
+        $violationFiles = array_keys($baseline->toArray()['A']);
+
+        $this->assertEquals('./app/A.php', $violationFiles[0]);
+        $this->assertEquals('./app/B.php', $violationFiles[1]);
+        $this->assertEquals('./app/C.php', $violationFiles[2]);
+    }
 }
