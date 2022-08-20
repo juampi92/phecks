@@ -3,6 +3,7 @@
 namespace Juampi92\Phecks\Domain\Pipes\Filters;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Juampi92\Phecks\Domain\Contracts\Pipe;
 use Juampi92\Phecks\Domain\DTOs\FileMatch;
 use Roave\BetterReflection\Reflection\ReflectionClass;
@@ -13,15 +14,15 @@ use Roave\BetterReflection\Reflection\ReflectionClass;
  */
 class WhereFileMatchesFilter implements Pipe
 {
-    /** @var string */
-    private string $filterRegex;
+    /** @var array<string> */
+    private $filterRegex;
 
     /**
-     * @param  string  $filterRegex
+     * @param  array<string>|string  $filterRegex
      */
-    public function __construct(string $filterRegex)
+    public function __construct($filterRegex)
     {
-        $this->filterRegex = $filterRegex;
+        $this->filterRegex = is_string($filterRegex) ? [$filterRegex] : $filterRegex;
     }
 
     /**
@@ -31,12 +32,23 @@ class WhereFileMatchesFilter implements Pipe
     public function __invoke($input): Collection
     {
         if ($input instanceof FileMatch) {
-            // File filter logic here.
+            return new Collection(
+                $this->checkFileMatches($input->file) ? [$input] : null,
+            );
         }
+
         if ($input instanceof ReflectionClass) {
-            $input->getFileName();
+            return new Collection(
+                $this->checkFileMatches($input->getFileName()) ? [$input] : null,
+            );
         }
 
         return new Collection([$input]);
+    }
+
+    public function checkFileMatches(string $file): bool
+    {
+        return collect($this->filterRegex)
+            ->contains(fn (string $pattern) => Str::is($pattern, $file));
     }
 }
