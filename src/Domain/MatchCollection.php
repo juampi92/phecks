@@ -45,7 +45,7 @@ class MatchCollection implements Countable
      *
      * @template TMatchInput of TMatch
      * @template TMatchOutput
-     * @param Pipe<TMatchInput, TMatchOutput>|callable(TMatchInput): TMatchOutput $pipe
+     * @param Pipe<TMatchInput, TMatchOutput>|callable(TMatchInput): Collection<array-key, TMatchOutput> $pipe
      * @return static<TMatchOutput>
      */
     public function pipe($pipe): self

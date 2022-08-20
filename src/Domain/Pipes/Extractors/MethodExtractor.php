@@ -4,9 +4,9 @@ namespace Juampi92\Phecks\Domain\Pipes\Extractors;
 
 use Illuminate\Support\Collection;
 use Juampi92\Phecks\Domain\Contracts\Pipe;
-use ReflectionMethod as ReflectionMethodFilter;
 use Roave\BetterReflection\Reflection\ReflectionClass;
 use Roave\BetterReflection\Reflection\ReflectionMethod;
+use ReflectionMethod as ReflectionMethodFilter;
 
 /**
  * @implements Pipe<ReflectionClass, ReflectionMethod>
