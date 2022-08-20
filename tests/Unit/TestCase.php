@@ -7,6 +7,11 @@ use Orchestra\Testbench\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
+    protected function getEnvironmentSetUp($app)
+    {
+        $app->setBasePath(realpath(__DIR__.'/../..') ?: __DIR__);
+    }
+
     /**
      * @param \Illuminate\Foundation\Application $application
      * @return array

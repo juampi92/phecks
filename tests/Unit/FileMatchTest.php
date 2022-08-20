@@ -6,11 +6,6 @@ use Juampi92\Phecks\Domain\DTOs\FileMatch;
 
 class FileMatchTest extends TestCase
 {
-    protected function getEnvironmentSetUp($app)
-    {
-        $app->setBasePath(realpath(__DIR__.'/../..') ?: __DIR__);
-    }
-
     public function test_it_creates_from_relative_paths(): void
     {
         $file = new FileMatch('./tests/Unit/FileMatchTest.php', 1);

@@ -46,4 +46,15 @@ class WhereExtendsClassFilterTest extends TestCase
 
         $this->assertEquals(0, $result->count());
     }
+
+    public function test_it_should_filter_out_if_empty_parent(): void
+    {
+        $class = ReflectionClass::createFromInstance(new class() {});
+
+        $filter = new WhereExtendsClassFilter(Stringable::class);
+
+        $result = $filter($class);
+
+        $this->assertEquals(0, $result->count());
+    }
 }
