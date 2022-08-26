@@ -1,63 +1,108 @@
-# Phecks: PHP Checks
+<div align="center">
+    <p>
+        <h1>
+            Phecks
+        </h1>
+    </p>
+</div>
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/juampi92/phecks.svg?style=flat-square)](https://packagist.org/packages/juampi92/phecks)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/juampi92/phecks/run-tests?label=tests)](https://github.com/juampi92/phecks/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/juampi92/phecks/Check%20&%20fix%20styling?label=code%20style)](https://github.com/juampi92/phecks/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/juampi92/phecks.svg?style=flat-square)](https://packagist.org/packages/juampi92/phecks)
+<p align="center">
+    <a href="https://juanpablo2.gitbook.io/phecks/" target="_blank">Documentation</a> |
+    <a href="#credits">Credits</a>
+</p>
 
-To-do, describe this package.
+<p align="center">
+    <a href="https://packagist.org/packages/juampi92/phecks"><img src="https://img.shields.io/packagist/v/juampi92/phecks.svg?style=flat-square" alt="Latest Version on Packagist"></a>
+    <a href="https://packagist.org/packages/juampi92/phecks"><img src="https://img.shields.io/packagist/dm/juampi92/phecks.svg?style=flat-square" alt="Downloads Per Month"></a>
+    <a href="https://github.com/juampi92/phecks/actions?query=workflow%3Arun-tests+branch%3Amain"><img src="https://img.shields.io/github/workflow/status/juampi92/phecks/run-tests?label=tests&style=flat-square" alt="GitHub Tests Action Status"></a>
+    <a href="https://packagist.org/packages/juampi92/phecks"><img src="https://img.shields.io/packagist/php-v/juampi92/phecks.svg?style=flat-square" alt="PHP from Packagist"></a>
+</p>
+
+---
+
+Phecks (stands for PHP-Checks) is a custom Check Runner. It will run custom checks in your codebase and will make a report of violations that need fixing.
+
+## What is it for?
+
+- For big teams to align on a styleguide beyond linting.
+- Used as an extra set of eyes during the Code Review.
+- Teams make their own checks according to their architectural decisions and styleguides.
+
+[See what checks are for](https://juanpablo2.gitbook.io/phecks/about-phecks/what-is-a-check).
+
+On its own, Phecks doesn't contain any checks.
+You and your team are responsible for defining and implementing these checks based on your architectural decisions.
+
+Phecks will provide you with a structure to develop and run these checks easily.
 
 ## Installation
 
 You can install the package via composer:
 
 ```bash
-composer require juampi92/phecks
+composer require juampi92/phecks --dev
 ```
 
-You can publish the config file with:
-
-```bash
-php artisan vendor:publish --tag="phecks:config"
-```
-
-This is the contents of the published config file:
-
-```php
-return [
-    'checks' => [],
-    'baseline' => '.phecks.baseline.json',
-];
-```
+Read the full installation instructions in the [documentation](https://juanpablo2.gitbook.io/phecks/).
 
 ## Usage
+
+Create a Check to make sure your team's architectural decisions are respected:
+
+```php
+/**
+ * @implements Check<ReflectionClass>
+ */
+class ConsoleClassesMustBeSuffixedWithCommandCheck implements Check
+{
+    public function __construct(
+        private readonly ClassSource $source,
+    ) {}
+
+    /**
+     * This method will get all the possible matches.
+     */
+    public function getMatches(): MatchCollection
+    {
+        return $this->source
+            ->directory('./app/Console')
+            ->run()
+            ->reject(fn (ReflectionClass $class): bool => $class->isAbstract())
+            ->pipe(new WhereExtendsClassFilter(\Illuminate\Console\Command::class));
+    }
+
+    /**
+     * processMatch will check if the matches are
+     * actual violations, and format them properly.
+     */
+    public function processMatch($match, FileMatch $file): array
+    {
+        if (Str::endsWith($match->getName(), 'Command')) {
+            return [];
+        }
+
+        return [
+            ViolationBuilder::make()->message('Command classes must be suffixed with \'Command\''),
+        ];
+    }
+}
+```
+
+Add the class in the config `phecks.checks`
+
+And run the following:
 
 ```bash
 php artisan phecks:run
 ```
+
+![](docs/error-output.png)
 
 ## Testing
 
 ```bash
 composer test
 ```
-
-## Contribution
-
-List of tasks missing for the release:
-
-- [ ] Improve Console formatter to list tips and errors in a clearer way (more similar to PHPStan).
-- [ ] Make a progress bar for the checks.
-- [ ] Make an ArtisanSource (php artisan list).
-- [x] Figure out how to use the filter + map together. Solution: split into two methods like PHPStan does.
-- [ ] Finish the idea of Extractors. Pipe? Transformers?
-- [ ] Wiki!
-- [ ] More tests!
-
-Ideas for future releases:
-
-- Be able to run only one Check.
-- Allow configuration of Checks (using the config).
 
 ## Credits
 
