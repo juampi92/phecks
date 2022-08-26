@@ -2,7 +2,7 @@
 
 namespace Juampi92\Phecks\Tests\Unit\Formatters;
 
-use Juampi92\Phecks\Application\Formatters\ConsoleFormatter;
+use Juampi92\Phecks\Application\Formatters\TableFormatter;
 use Juampi92\Phecks\Application\Formatters\FormatResolver;
 use Juampi92\Phecks\Application\Formatters\GithubFormatter;
 use Juampi92\Phecks\Tests\Unit\TestCase;
@@ -33,7 +33,7 @@ class FormatResolverTest extends TestCase
         return [
             'console' => [
                 'formatter' => 'console',
-                'expected' => ConsoleFormatter::class,
+                'expected' => TableFormatter::class,
             ],
             'github' => [
                 'formatter' => 'github',

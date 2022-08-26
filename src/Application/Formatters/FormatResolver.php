@@ -12,11 +12,11 @@ class FormatResolver
     /** @var array<non-empty-string, class-string<Formatter>> */
     public const FORMATTERS = [
         'github' => GithubFormatter::class,
-        'console' => ConsoleFormatter::class,
+        'table' => TableFormatter::class,
     ];
 
     /** @var class-string<Formatter> */
-    public const DEFAULT_FORMATTER = ConsoleFormatter::class;
+    public const DEFAULT_FORMATTER = TableFormatter::class;
 
     /**
      * @param string|mixed $formatter

@@ -10,26 +10,15 @@ use Juampi92\Phecks\Domain\CheckRunner;
 
 class PhecksRunCommand extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
+    /** @var string */
     protected $signature = 'phecks:run
                                     {--generate-baseline : Will run and generate the baseline.}
                                     {--ignore-baseline : Will run and show all errors.}
-                                    {--format=console : Pick a formatter. console|stats}';
+                                    {--format=table : Pick a formatter.}';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
+    /** @var string */
     protected $description = 'Runs the checks.';
 
-    /**
-     * Execute the console command.
-     */
     public function handle(CheckRunner $checkRunner, BaselineFilter $baselineFilter, BaselineGenerator $baselineGenerator): int
     {
         $violations = $checkRunner->run();
