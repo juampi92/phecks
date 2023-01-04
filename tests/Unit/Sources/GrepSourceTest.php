@@ -29,11 +29,10 @@ class GrepSourceTest extends TestCase
             ->files('./tests/Unit/Sources/stubs')
             ->setFlags([
                 GrepFlags::DEFERENCE_RECURSIVE,
-                GrepFlags::WITH_FILENAME,
                 GrepFlags::LINE_NUMBER,
             ])
             ->addFlags([GrepFlags::IGNORE_CASE])
-            ->addFlags(GrepFlags::FIXED_STRINGS, GrepFlags::EXTENDED_REGEXP)
+            ->addFlags(GrepFlags::WITH_FILENAME)
             ->pattern('extends')
             ->run();
 
