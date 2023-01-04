@@ -96,7 +96,7 @@ And run the following:
 php artisan phecks:run
 ```
 
-![](docs/error-output.png)
+![error-output](docs/error-output.png)
 
 ## Testing
 
