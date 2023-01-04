@@ -10,19 +10,19 @@
   "license": "MIT",
   "keywords": ["laravel", "api"],
   "require": {
-    "php" : "^7.4|^8.0|^8.1",
+    "php" : "^8.0|^8.1|^8.2",
     "ext-json": "*",
     "illuminate/console": "^8.0|^9.0",
     "illuminate/contracts": "^8.0|^9.0",
     "illuminate/filesystem": "^8.0|^9.0",
     "illuminate/support": "^8.0|^9.0",
-    "roave/better-reflection": "^5.7"
+    "roave/better-reflection": "^5.5|^6.1"
   },
   "require-dev": {
     "orchestra/testbench": "^5.0|^6.0|^7.0",
-    "phpunit/phpunit": "^9.4",
-    "friendsofphp/php-cs-fixer": "^3.8",
-    "nunomaduro/larastan": "^2.1"
+    "nunomaduro/larastan": "^2.3|^1",
+    "friendsofphp/php-cs-fixer": "^3.13",
+    "phpunit/phpunit": "^9.5"
   },
   "autoload": {
     "psr-4": {
