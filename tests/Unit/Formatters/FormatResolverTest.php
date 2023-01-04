@@ -2,9 +2,9 @@
 
 namespace Juampi92\Phecks\Tests\Unit\Formatters;
 
-use Juampi92\Phecks\Application\Formatters\TableFormatter;
 use Juampi92\Phecks\Application\Formatters\FormatResolver;
 use Juampi92\Phecks\Application\Formatters\GithubFormatter;
+use Juampi92\Phecks\Application\Formatters\TableFormatter;
 use Juampi92\Phecks\Tests\Unit\TestCase;
 use Mockery;
 use RuntimeException;
