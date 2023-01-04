@@ -29,8 +29,8 @@ class ClassExtractor implements Pipe
             new AutoloadSourceLocator(),
         ]);
         $reflector = new DefaultReflector($sourceLocator);
-        $classes = $reflector->reflectAllClasses();
+        $class = $reflector->reflectAllClasses()[0] ?? null;
 
-        return new Collection($classes);
+        return new Collection($class ? [$class] : []);
     }
 }
