@@ -31,8 +31,8 @@ class FormatResolverTest extends TestCase
     public function formatterDataProvider(): array
     {
         return [
-            'console' => [
-                'formatter' => 'console',
+            'table' => [
+                'formatter' => 'table',
                 'expected' => TableFormatter::class,
             ],
             'github' => [
