@@ -1,50 +1,53 @@
 {
-  "name": "juampi92/phecks",
-  "description": "A package to run custom PHP checks",
-  "authors": [
-    {
-      "name": "juampi92",
-      "email": "juampi92@gmail.com"
+    "name": "juampi92/phecks",
+    "description": "A package to run custom PHP checks",
+    "authors": [
+        {
+            "name": "juampi92",
+            "email": "juampi92@gmail.com"
+        }
+    ],
+    "license": "MIT",
+    "keywords": [
+        "laravel",
+        "api"
+    ],
+    "require": {
+        "php": "^8.0|^8.1|^8.2",
+        "ext-json": "*",
+        "illuminate/console": "^8.0|^9.0|^10.0|^11.0",
+        "illuminate/contracts": "^8.0|^9.0|^10.0|^11.0",
+        "illuminate/filesystem": "^8.0|^9.0|^10.0|^11.0",
+        "illuminate/support": "^8.0|^9.0|^10.0|^11.0",
+        "roave/better-reflection": "^5.5|^6.1"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^5.0|^6.0|^7.0|^8.0|^9.0",
+        "nunomaduro/larastan": "^2.3|^1",
+        "friendsofphp/php-cs-fixer": "^3.13",
+        "phpunit/phpunit": "^9.5|^10.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Juampi92\\Phecks\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Juampi92\\Phecks\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit --colors=always",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+        "php-cs-fix": "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php -vv",
+        "phpstan": "./vendor/bin/phpstan analyze -c phpstan.neon.dist --memory-limit 1G"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Juampi92\\Phecks\\PhecksServiceProvider"
+            ]
+        }
     }
-  ],
-  "license": "MIT",
-  "keywords": ["laravel", "api"],
-  "require": {
-    "php" : "^8.0|^8.1|^8.2",
-    "ext-json": "*",
-    "illuminate/console": "^8.0|^9.0|^10.0",
-    "illuminate/contracts": "^8.0|^9.0|^10.0",
-    "illuminate/filesystem": "^8.0|^9.0|^10.0",
-    "illuminate/support": "^8.0|^9.0|^10.0",
-    "roave/better-reflection": "^5.5|^6.1"
-  },
-  "require-dev": {
-    "orchestra/testbench": "^5.0|^6.0|^7.0|^8.0",
-    "nunomaduro/larastan": "^2.3|^1",
-    "friendsofphp/php-cs-fixer": "^3.13",
-    "phpunit/phpunit": "^9.5"
-  },
-  "autoload": {
-    "psr-4": {
-      "Juampi92\\Phecks\\": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Juampi92\\Phecks\\Tests\\": "tests/"
-    }
-  },
-  "scripts": {
-    "test": "vendor/bin/phpunit --colors=always",
-    "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
-    "php-cs-fix": "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php -vv",
-    "phpstan": "./vendor/bin/phpstan analyze -c phpstan.neon.dist --memory-limit 1G"
-  },
-  "extra": {
-    "laravel": {
-      "providers": [
-        "Juampi92\\Phecks\\PhecksServiceProvider"
-      ]
-    }
-  }
 }
