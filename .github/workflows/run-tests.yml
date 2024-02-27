@@ -2,20 +2,23 @@ name: run-tests
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   pull_request:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
   test:
     runs-on: ${{ matrix.os }}
+
     strategy:
       fail-fast: true
       matrix:
-        os: [ ubuntu-latest ]
-        php: [ 8.2, 8.1, 8.0 ]
-        laravel: [ 9.*, 8.*, 10.* ]
-        stability: [ prefer-stable ]
+        os: [ubuntu-latest]
+        php: [8.2, 8.1, 8.0]
+        laravel: ['8.*', '9.*', '10.*', '11.*']
+        stability: [prefer-stable]
         include:
           - laravel: 10.*
             testbench: 8.*
@@ -23,12 +26,18 @@ jobs:
             testbench: 7.*
           - laravel: 8.*
             testbench: ^6.6
+          - laravel: 11.*
+            testbench: 9.*
         exclude:
           - laravel: 8.*
             php: 8.2
           - laravel: 9.*
             php: 8.0
           - laravel: 10.*
+            php: 8.0
+          - laravel: 11.*
+            php: 8.1
+          - laravel: 11.*
             php: 8.0
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
@@ -48,9 +57,11 @@ jobs:
         run: |
           echo "::add-matcher::${{ runner.tool_cache }}/php.json"
           echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
       - name: Install dependencies
         run: |
           composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update --ignore-platform-reqs
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction --ignore-platform-reqs
+
       - name: Execute tests
         run: vendor/bin/phpunit
