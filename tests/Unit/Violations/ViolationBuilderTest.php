@@ -44,7 +44,7 @@ class ViolationBuilderTest extends TestCase
     public function test_should_fail_when_invalid_data(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectDeprecationMessageMatches("/The violation must have a message/i");
+        $this->expectExceptionMessageMatches("/The violation must have a message/i");
 
         ViolationBuilder::make()->build($this->getCheck(), new FileMatch('./tests/Random.php'));
     }
