@@ -30,27 +30,30 @@ class TableFormatter implements Formatter
             return;
         }
 
-        $violations
-            ->groupBy(fn (Violation $violation): string => $violation->getTarget())
-            ->each(function (ViolationsCollection $violations, string $target) {
-                $this->style->table(
-                    ['Line', $target],
-                    $violations->map(function (Violation $violation): array {
-                        $errorLine = sprintf("%s  <options=bold>(%s)</>", $violation->getMessage(), $violation->getIdentifier());
-                        $urlLine = $violation->getUrl() ? "\n<href={$violation->getUrl()}>💡 Read more.</>" : '';
+        /** @var Collection<string, ViolationsCollection> $violationsGroupedByTarget */
+        $violationsGroupedByTarget = $violations
+            ->groupBy(fn (Violation $violation): string => $violation->getTarget());
 
-                        return [
-                            $violation->getLine() ?: '-',
-                            $errorLine . $urlLine,
-                        ];
-                    })->all()
-                );
-            });
+        $violationsGroupedByTarget->each(function (ViolationsCollection $violations, string $target) {
+            $this->style->table(
+                ['Line', $target],
+                $violations->map(function (Violation $violation): array {
+                    $errorLine = sprintf("%s  <options=bold>(%s)</>", $violation->getMessage(), $violation->getIdentifier());
+                    $urlLine = $violation->getUrl() ? "\n<href={$violation->getUrl()}>💡 Read more.</>" : '';
+
+                    return [
+                        $violation->getLine() ?: '-',
+                        $errorLine . $urlLine,
+                    ];
+                })->all()
+            );
+        });
+
+        /** @var Collection<string, ViolationsCollection> $violationsGroupedBySeverity */
+        $violationsGroupedBySeverity = $violations->groupBy(fn (Violation $violation): string => $violation->getSeverity());
 
         /** @var Collection<ViolationSeverity::*, int> $severitiesCount */
-        $severitiesCount = $violations
-            ->groupBy(fn (Violation $violation): string => $violation->getSeverity())
-            ->map(fn (Collection $violationsCollection): int => $violationsCollection->count());
+        $severitiesCount = $violationsGroupedBySeverity->map(fn (Collection $violationsCollection): int => $violationsCollection->count());
 
         $errorsCount = (int) $severitiesCount->get(ViolationSeverity::ERROR, 0);
         if ($errorsCount > 0) {
