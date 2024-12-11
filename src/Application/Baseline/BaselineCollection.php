@@ -69,16 +69,17 @@ class BaselineCollection
 
     public static function fromViolations(ViolationsCollection $collection): self
     {
+        /** @var Collection<string, Collection<array-key, Violation>> $violationsByIdentifier */
+        $violationsByIdentifier = $collection->groupBy(fn (Violation $violation): string => $violation->getIdentifier());
+
         return new self(
-            $collection
-                ->groupBy(fn (Violation $violation): string => $violation->getIdentifier())
-                ->map(
-                    fn (Collection $violations): array => $violations
-                        ->groupBy(fn (Violation $violation) => $violation->getTarget())
-                        ->map(fn (Collection $violations): int => $violations->count())
-                        ->sortKeys()
-                        ->all(),
-                )
+            $violationsByIdentifier->map(
+                fn (Collection $violationsByIdentifier): array => $violationsByIdentifier
+                    ->groupBy(fn (Violation $violation): string => $violation->getTarget())
+                    ->map(fn (Collection $violationsByTarget): int => $violationsByTarget->count())
+                    ->sortKeys()
+                    ->all(),
+            )
                 ->all(),
         );
     }

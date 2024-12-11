@@ -7,13 +7,13 @@ use Juampi92\Phecks\Domain\Contracts\Pipe;
 use Roave\BetterReflection\Reflection\ReflectionClass;
 
 /**
- * @implements Pipe<ReflectionClass, string>
+ * @implements Pipe<ReflectionClass, string|null>
  */
 class NamespaceExtractor implements Pipe
 {
     /**
      * @param ReflectionClass $input
-     * @return Collection<array-key, string>
+     * @return Collection<array-key, string|null>
      */
     public function __invoke($input): Collection
     {

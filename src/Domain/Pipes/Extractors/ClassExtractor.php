@@ -23,13 +23,17 @@ class ClassExtractor implements Pipe
      */
     public function __invoke($input): Collection
     {
+        if (empty($input->file)) {
+            return new Collection([]);
+        }
+
         $astLocator = (new BetterReflection())->astLocator();
         $sourceLocator = new AggregateSourceLocator([
             new SingleFileSourceLocator($input->file, $astLocator),
             new AutoloadSourceLocator(),
         ]);
         $reflector = new DefaultReflector($sourceLocator);
-        $class = $reflector->reflectAllClasses()[0] ?? null;
+        $class = $reflector->reflectAllClasses()[0] ?? null; // @phpstan-ignore-line
 
         return new Collection($class ? [$class] : []);
     }

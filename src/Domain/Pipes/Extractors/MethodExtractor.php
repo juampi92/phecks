@@ -10,13 +10,15 @@ use Roave\BetterReflection\Reflection\ReflectionMethod;
 
 /**
  * @implements Pipe<ReflectionClass, ReflectionMethod>
+ * @phpstan-type Filter = ReflectionMethodFilter::*
  */
 class MethodExtractor implements Pipe
 {
+    /** @var Filter|null */
     private ?int $filter;
 
     /**
-     * @param ReflectionMethodFilter::*|null $filter
+     * @param Filter|null $filter
      */
     public function __construct(
         ?int $filter = null
@@ -30,8 +32,10 @@ class MethodExtractor implements Pipe
      */
     public function __invoke($input): Collection
     {
-        return collect(
-            $input->getMethods($this->filter),
-        );
+        $methods = $this->filter === null
+            ? $input->getMethods()
+            : $input->getMethods($this->filter);
+
+        return collect($methods);
     }
 }
