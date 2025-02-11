@@ -60,7 +60,7 @@ class MethodExtractorTest extends TestCase
         );
     }
 
-    public function methodFilterDataProvider(): array
+    public static function methodFilterDataProvider(): array
     {
         return [
             'private' => [

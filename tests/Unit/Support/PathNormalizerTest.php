@@ -17,7 +17,7 @@ class PathNormalizerTest extends TestCase
         $this->assertEquals(value($expected), PathNormalizer::toAbsolute(value($path)));
     }
 
-    public function toAbsoluteDataProvider(): array
+    public static function toAbsoluteDataProvider(): array
     {
         return [
             'Absolute to Absolute' => [
@@ -39,7 +39,7 @@ class PathNormalizerTest extends TestCase
         $this->assertEquals(value($expected), PathNormalizer::toRelative(value($path)));
     }
 
-    public function toRelativeDataProvider(): array
+    public static function toRelativeDataProvider(): array
     {
         return [
             'absolute to relative' => [
