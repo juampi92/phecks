@@ -17,7 +17,7 @@ class PhecksBaselineWarningsTest extends TestCase
                 './app/ClassB.php' => 2,
             ],
             'IdentifierBar' => [
-                './app/ClassB.php' => 2,
+                './app/ClassB.php' => 3,
                 './app/ClassC.php' => 9,
             ],
         ];
@@ -29,7 +29,11 @@ class PhecksBaselineWarningsTest extends TestCase
         );
 
         // Act
-        $exitCode = $this->artisan('phecks:warnings ./app/ClassA.php ./app/ClassB.php')->run();
+        $exitCode = $this->artisan('phecks:warnings ./app/ClassA.php app/ClassB.php')
+            ->expectsOutput("::warning file=./app/ClassA.php,line=0,title=IdentifierFoo::Found 1 occurrences of this error skipped in the baseline.")
+            ->expectsOutput("::warning file=./app/ClassB.php,line=0,title=IdentifierFoo::Found 2 occurrences of this error skipped in the baseline.")
+            ->expectsOutput("::warning file=./app/ClassB.php,line=0,title=IdentifierBar::Found 3 occurrences of this error skipped in the baseline.")
+            ->run();
 
         // Assert
         $this->assertEquals(0, $exitCode, 'The command must always return success');

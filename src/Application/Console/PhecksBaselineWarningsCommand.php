@@ -10,6 +10,7 @@ use Juampi92\Phecks\Application\Formatters\FormatResolver;
 use Juampi92\Phecks\Domain\Violations\Violation;
 use Juampi92\Phecks\Domain\Violations\ViolationsCollection;
 use Juampi92\Phecks\Domain\Violations\ViolationSeverity;
+use Juampi92\Phecks\Support\PathNormalizer;
 
 class PhecksBaselineWarningsCommand extends Command
 {
@@ -26,7 +27,8 @@ class PhecksBaselineWarningsCommand extends Command
         $baseline = $baselineLoader->load();
 
         /** @var Collection<array-key, string> $files */
-        $files = collect(Arr::wrap($this->argument('file')));
+        $files = collect(Arr::wrap($this->argument('file')))
+            ->map(fn (string $file): string => PathNormalizer::toRelative($file));
 
         $violations = $files
             ->flatMap(fn (string $file): ViolationsCollection => $baseline->getViolationsForFile($file));
