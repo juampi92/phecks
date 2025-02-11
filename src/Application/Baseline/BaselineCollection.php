@@ -88,4 +88,25 @@ class BaselineCollection
     {
         return $this->baseline->toArray();
     }
+
+    /**
+     * Get all baseline rules for a specific file
+     *
+     * @param string $filePath
+     * @return ViolationsCollection
+     */
+    public function getViolationsForFile(string $filePath): ViolationsCollection
+    {
+        return new ViolationsCollection(
+            $this->baseline
+                ->map(fn (array $violations): int => $violations[$filePath] ?? 0)
+                ->filter(fn (int $count) => $count > 0)
+            ->map(fn (int $count, string $identifier): Violation => new Violation(
+                $identifier,
+                new FileMatch($filePath, 0),
+                "Found {$count} occurrences of {$identifier}.",
+            ))
+            ->values()
+        );
+    }
 }
