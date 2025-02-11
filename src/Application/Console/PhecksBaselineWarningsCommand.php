@@ -19,7 +19,7 @@ class PhecksBaselineWarningsCommand extends Command
                                     {file*}';
 
     /** @var string */
-    protected $description = 'Will display the Baselined warnings inside files.';
+    protected $description = 'Will display the baselined error inside files as warnings.';
 
     public function handle(BaselineLoader $baselineLoader): int
     {

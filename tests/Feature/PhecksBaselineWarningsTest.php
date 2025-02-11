@@ -34,4 +34,13 @@ class PhecksBaselineWarningsTest extends TestCase
         // Assert
         $this->assertEquals(0, $exitCode, 'The command must always return success');
     }
+
+    public function test_should_print_nothing_if_baseline_does_not_exist(): void
+    {
+        // Act
+        $exitCode = $this->artisan('phecks:warnings ./app/ClassA.php ./app/ClassB.php')->run();
+
+        // Assert
+        $this->assertEquals(0, $exitCode, 'The command must always return success');
+    }
 }

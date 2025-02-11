@@ -104,7 +104,7 @@ class BaselineCollection
             ->map(fn (int $count, string $identifier): Violation => new Violation(
                 $identifier,
                 new FileMatch($filePath, 0),
-                "Found {$count} occurrences of {$identifier}.",
+                "Found {$count} occurrences of this error skipped in the baseline.",
             ))
             ->values()
         );
