@@ -28,7 +28,7 @@ class FormatResolverTest extends TestCase
         $this->assertInstanceOf($expected, $formatter);
     }
 
-    public function formatterDataProvider(): array
+    public static function formatterDataProvider(): array
     {
         return [
             'table' => [

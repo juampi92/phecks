@@ -64,4 +64,25 @@ class BaselineCollectionTest extends TestCase
         $this->assertEquals('./app/B.php', $violationFiles[1]);
         $this->assertEquals('./app/C.php', $violationFiles[2]);
     }
+
+    public function test_should_get_violations_per_file(): void
+    {
+        // Arrange
+        $filePath = './app/A.php';
+
+        $baselineViolations = new ViolationsCollection([
+            new Violation('A', new FileMatch($filePath), 'lorem ipsum'),
+            new Violation('A', new FileMatch('./app/C.php'), 'lorem ipsum'),
+            new Violation('B', new FileMatch($filePath), 'lorem ipsum 2'),
+            new Violation('B', new FileMatch('./app/Z.php'), 'lorem ipsum'),
+        ]);
+
+        // Act
+        $baseline = BaselineCollection::fromViolations($baselineViolations);
+        $fileViolations = $baseline->getViolationsForFile($filePath);
+
+        $this->assertCount(2, $fileViolations);
+        $this->assertEquals('A', $fileViolations[0]->getIdentifier());
+        $this->assertEquals('B', $fileViolations[1]->getIdentifier());
+    }
 }

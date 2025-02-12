@@ -75,4 +75,14 @@ class Violation
     {
         return $this->severity;
     }
+
+    /**
+     * @param ViolationSeverity::* $severity
+     */
+    public function setSeverity(string $severity): self
+    {
+        $this->severity = $severity;
+
+        return $this;
+    }
 }
