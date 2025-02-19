@@ -2,18 +2,21 @@ name: run-tests
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   pull_request:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
   test:
     runs-on: ubuntu-latest
+
     strategy:
       fail-fast: true
       matrix:
         php: [8.3, 8.2, 8.1]
-        laravel: [11.*, 10.*, 9.*]
+        laravel: ['9.*', '10.*', '11.*', '12.*']
         stability: [prefer-stable]
         include:
           - laravel: 11.*
@@ -23,8 +26,12 @@ jobs:
           - laravel: 9.*
             testbench: 7.*
           - php: 8.1
+          - laravel: 12.*
+            testbench: 10.*
         exclude:
           - laravel: 11.*
+            php: 8.1
+          - laravel: 12.*
             php: 8.1
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ubuntu-latest
@@ -44,6 +51,7 @@ jobs:
         run: |
           echo "::add-matcher::${{ runner.tool_cache }}/php.json"
           echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
       - name: Install dependencies
         run: |
           composer require \
@@ -52,5 +60,6 @@ jobs:
             "${{ matrix.php == '8.1' && 'roave/better-reflection:6.25.*' || 'roave/better-reflection:6.*' }}" \
             --no-interaction --no-update --ignore-platform-reqs
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction --ignore-platform-reqs
+
       - name: Execute tests
         run: vendor/bin/phpunit
