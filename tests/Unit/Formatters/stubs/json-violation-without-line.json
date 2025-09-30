@@ -1,0 +1,18 @@
+{
+    "package": "phecks",
+    "violations": [
+        {
+            "identifier": "NoLineError",
+            "file": "./app/FileOne.php",
+            "line": null,
+            "message": "Error without line number",
+            "url": null,
+            "severity": "error"
+        }
+    ],
+    "summary": {
+        "errors": 1,
+        "warnings": 0
+    },
+    "total": 1
+}
