@@ -1,0 +1,18 @@
+{
+    "package": "phecks",
+    "violations": [
+        {
+            "identifier": "MyError",
+            "file": "./app/FileOne.php",
+            "line": 15,
+            "message": "Testing error",
+            "url": "https://www.foo.bar",
+            "severity": "error"
+        }
+    ],
+    "summary": {
+        "errors": 1,
+        "warnings": 0
+    },
+    "total": 1
+}

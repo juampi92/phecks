@@ -2,9 +2,10 @@
 
 namespace Juampi92\Phecks\Domain\Violations;
 
+use Illuminate\Contracts\Support\Arrayable;
 use Juampi92\Phecks\Domain\DTOs\FileMatch;
 
-class Violation
+class Violation implements Arrayable
 {
     private string $identifier;
 
@@ -84,5 +85,20 @@ class Violation
         $this->severity = $severity;
 
         return $this;
+    }
+
+    /**
+     * @return array{identifier: string, file: string, line: int|null, message: string, url: string|null, severity: string}
+     */
+    public function toArray(): array
+    {
+        return [
+            'identifier' => $this->getIdentifier(),
+            'file' => $this->getTarget(),
+            'line' => $this->getLine(),
+            'message' => $this->getMessage(),
+            'url' => $this->getUrl(),
+            'severity' => $this->getSeverity(),
+        ];
     }
 }
