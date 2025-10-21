@@ -12,6 +12,7 @@ class FormatResolver
     /** @var array<non-empty-string, class-string<Formatter>> */
     public const FORMATTERS = [
         'github' => GithubFormatter::class,
+        'json' => JsonFormatter::class,
         'table' => TableFormatter::class,
     ];
 

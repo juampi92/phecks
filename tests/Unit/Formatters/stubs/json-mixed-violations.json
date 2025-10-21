@@ -1,0 +1,34 @@
+{
+    "package": "phecks",
+    "violations": [
+        {
+            "identifier": "FirstError",
+            "file": "./app/FileOne.php",
+            "line": 15,
+            "message": "First error message",
+            "url": "https://docs.example.com",
+            "severity": "error"
+        },
+        {
+            "identifier": "FirstWarning",
+            "file": "./app/FileTwo.php",
+            "line": 30,
+            "message": "First warning message",
+            "url": null,
+            "severity": "warning"
+        },
+        {
+            "identifier": "SecondError",
+            "file": "./app/FileThree.php",
+            "line": 45,
+            "message": "Second error message",
+            "url": null,
+            "severity": "error"
+        }
+    ],
+    "summary": {
+        "errors": 2,
+        "warnings": 1
+    },
+    "total": 3
+}
