@@ -68,12 +68,24 @@ jobs:
 
       - name: Install dependencies
         run: |
+          # Laravel 9, 10 and 11 no longer get security fixes. They stay supported by this package and are tested on
+          # purpose, so Composer may install them despite their advisories. Supported versions keep the default blocking.
+          if [[ "${{ matrix.laravel }}" == 9.* || "${{ matrix.laravel }}" == 10.* || "${{ matrix.laravel }}" == 11.* ]]; then
+            export COMPOSER_NO_SECURITY_BLOCKING=1
+          fi
+          # The older Laravel versions are tested on PHP versions they do not officially support, so all platform
+          # requirements are ignored. Laravel 13 allows Symfony 8, which needs PHP 8.4. Keep the PHP version check
+          # there, so that PHP 8.3 gets Symfony 7.4, and ignore only the extensions.
+          platform="--ignore-platform-reqs"
+          if [[ "${{ matrix.laravel }}" == 13.* ]]; then
+            platform="--ignore-platform-req=ext-*"
+          fi
           composer require \
             "laravel/framework:${{ matrix.laravel }}" \
             "orchestra/testbench:${{ matrix.testbench }}" \
-            "${{ matrix.php == '8.1' && 'roave/better-reflection:6.25.*' || 'roave/better-reflection:6.*' }}" \
-            --no-interaction --no-update --ignore-platform-reqs
-          composer update --${{ matrix.stability }} --prefer-dist --no-interaction --ignore-platform-reqs
+            "${{ matrix.php == '8.1' && 'roave/better-reflection:6.25.*' || matrix.php == '8.2' && 'roave/better-reflection:6.66.*' || 'roave/better-reflection:6.*' }}" \
+            --no-interaction --no-update "$platform"
+          composer update --${{ matrix.stability }} --prefer-dist --no-interaction "$platform"
 
       - name: Execute tests
         run: vendor/bin/phpunit
